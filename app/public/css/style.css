@@ -1,0 +1,164 @@
+/* 
+##############################
+###       PARAMETERS       ###
+##############################
+*/
+
+/* ---- Animations ---- */
+@keyframes messageAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+  33% {
+    transform: translateX(0);
+  }
+  66% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 
+##############################
+###      COMMON STYLE      ###
+##############################
+*/
+
+/* ---- Body ---- */
+
+body {
+  background-color: #4fb6bbcc;
+  font-family: 'Open Sans', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  margin: 0;
+}
+
+/* ---- Central Element ---- */
+
+div#page {
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4) ;
+  margin: 0 auto;
+  min-width: 1024px;
+  width: 70%;
+}
+
+/* ---- Header ---- */
+
+header {
+  background-color: #ff6e6b;
+  height: 100px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+/* ---- Site Title ---- */
+
+#site-title {
+  display: inline-block;
+  text-decoration: none;
+  width: 40%;
+}
+
+#site-title h1 {
+  color: #ffffff;
+  font-family: 'Great Vibes', sans-serif;
+  font-size: 5rem;
+  font-weight: 400;
+  line-height: 100px;
+  margin: 0 auto;
+}
+
+#site-title h1 strong {
+  color: #ffce6b;
+  font-weight: 400;
+}
+
+/* ---- Connection Area ---- */
+
+#connection-area {
+  height: 70%;
+  padding: 15px 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15%;
+  z-index: 1;
+}
+
+#connection {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+#connection-link, #connection div {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  text-decoration: none;
+}
+
+#connection #user-icon {
+  font-size: 1.5em;
+}
+
+#connection #username {
+  margin: 0;
+}
+
+#connection-check {
+  display: none;
+}
+
+#connection-check:checked ~ #user-menu {
+  transform: scaleY(1);
+}
+
+/* ---- User menu ---- */
+
+#user-menu {
+  margin-top: 15px;
+  transition: 0.1s;
+  transform: scaleY(0);
+  transform-origin: top;
+  z-index: 1000;
+}
+
+.user-menu-list {
+  background-color: #ff6e6b;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-menu-list-item {
+  background-color: #ffffff60;
+  line-height: 40px;
+  text-align: center;
+}
+
+.user-menu-list-item:hover {
+  background-color: #ffffff00;
+}
+
+.user-menu-list-item a {
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+/* ---- Content Container ---- */
+
+#content-container {
+  background-color: #ffce6b20;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  min-height: calc(100vh - 100px);
+}
