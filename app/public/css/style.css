@@ -163,6 +163,20 @@ header {
   min-height: calc(100vh - 100px);
 }
 
+/* ---- Content ---- */
+
+#content-container article.content {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4) ;
+  grid-column: 2/12;
+  margin: 35px 0;
+}
+
+#content-container article.content h2 {
+  text-align: center;
+}
+
 /* 
 ##############################
 ###       PAGE STYLE       ###
@@ -243,4 +257,47 @@ header {
 
 .map-list-container .map-list .map-list-item a.is-hover {
   background-color: #ff6e6b;
+}
+
+/* ---- Connection ---- */
+
+#content-container.connection article {
+  grid-column: 5/9;
+  height: 320px;
+}
+
+#content-container.connection article p:last-child {
+  text-align: center;
+}
+
+#content-container.connection form {
+  margin: 0 auto;
+  width: 70%;
+}
+
+#content-container.connection form label {
+  font-size: 0.9rem;
+}
+
+#content-container.connection form input {
+  background: #ffffff;
+  border: 1px solid #cad1d9;
+  border-radius: 4px;
+  display: block;
+  margin: 0.385em auto 0;
+  padding: 0.846em;
+  text-indent: 0.188em;
+  width: 90%;
+}
+
+#content-container.connection form input#submit {
+  background-color: #4fb6bb60;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: calc(90% + 0.846em*2 + 2px);
+}
+
+#content-container.connection form input#submit:hover {
+  background-color: #4fb6bb;
+  transition: 0.3s;
 }
