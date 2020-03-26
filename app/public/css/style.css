@@ -162,3 +162,85 @@ header {
   grid-template-columns: repeat(12, 1fr);
   min-height: calc(100vh - 100px);
 }
+
+/* 
+##############################
+###       PAGE STYLE       ###
+##############################
+*/
+
+/* ---- HomePage ---- */
+
+#content-container.home #message-container {
+  background-color: #ffce6b60;
+  grid-column: 1/13;
+  height: 40px;
+  overflow-x: hidden;
+}
+
+#content-container.home #message-container:hover {
+  background-color: #ffce6b;
+}
+
+#content-container.home #message-container #message {
+  animation: messageAnimation 10s infinite linear;
+  line-height: 40px;
+  margin: 0;
+  text-align: center;
+}
+
+#content-container.home article#map-container {
+  align-items: center;
+  display: flex;
+  grid-column: 1/13;
+  justify-content: space-around;
+
+  /* border: 1px solid red; */
+}
+
+.map-image {
+  min-width: 585px;
+  width: 40vw;
+}
+
+.map-image a {
+  cursor: pointer;
+  fill: #4fb6bb60;
+  stroke: #f0f8ff;
+  stroke-width: 1.5px;
+  transition: fill 0.2s;
+}
+
+.map-image .is-hover path {
+  fill: #ff6e6b;
+}
+
+.map-list-container {
+  width: 30%;
+}
+
+.map-list-container .map-list {
+  list-style-type: none;
+  text-align: center;
+  width: 70%;
+}
+
+.map-list-container .map-list .map-list-item {
+  height: 30px;
+}
+
+.map-list-container .map-list .map-list-item a {
+  background-color: #ffffff;
+  font-weight: bold;
+  color: inherit;
+  display: inline-block;
+  height: 100%;
+  line-height: 30px;
+  text-decoration: none;
+  transition: color 0.3s;
+  width: 100%;
+}
+
+.map-list-container .map-list .map-list-item a.is-hover {
+  background-color: #ff6e6b;
+}
