@@ -355,3 +355,57 @@ header {
   cursor: pointer;
   transition: 0.3s;
 }
+
+/* ---- Profile ---- */
+
+#content-container.my-account form fieldset {
+  margin: 0 auto 0.8em;
+  width: 95%;
+}
+
+#content-container.my-account form fieldset div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#content-container.my-account form p {
+  margin-top: 0;
+  width: 49%;
+}
+
+#content-container.my-account form label {
+  font-size: 0.9rem;
+}
+
+#content-container.my-account form input, select {
+  background: #fff;
+  border: 1px solid #cad1d9;
+  border-radius: 4px;
+  display: block;
+  text-indent: 0.188em;
+}
+
+#content-container.my-account form input{
+  margin: 0.385em 0 0;
+  padding: 0.846em;
+  width: calc(100% - 0.846em*2 - 2px);
+}
+
+#content-container.my-account form select{
+  margin: 0.385em 0 0;
+  padding: 0.78em;
+  width: 98.6%;
+}
+
+#content-container.my-account form input.submit {
+  background-color: #4fb6bb60;
+  font-size: 0.9rem;
+  margin: 0.8em auto;
+  width: 50%;
+}
+
+#content-container.my-account form input.submit:hover {
+  background-color: #4fb6bb;
+  cursor: pointer;
+  transition: 0.3s;
+}

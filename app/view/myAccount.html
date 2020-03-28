@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="../public/css/style.css">
+	<title>map interactive</title>
+</head>
+<body>
+	<div id="page">
+
+		<header>
+			<a id="site-title" href="home.html"><h1><strong>O</strong>ccaz' <strong>O</strong>ù ?</h1></a>
+			<section id="connection-area">
+        <!-- User information and user menu, display if no user is logged -->
+
+				<label for="connection-check" id="connection">
+					<div>
+						<i id="user-icon" class="far fa-user"></i>
+						<p id="username">Nom Utilisateur</p>
+					</div>
+				</label>
+
+				<input type="checkbox" name="connection-check" id="connection-check">
+
+				<div id="user-menu">
+					<ul class="user-menu-list">
+						<li class="user-menu-list-item"><a href="myAccount.html">Mon compte</a></li>
+						<li class="user-menu-list-item"><a href="myAnnounces.html">Mes annonces</a></li>
+						<li class="user-menu-list-item"><a href="#">Me déconnecter</a></li>
+					</ul>
+				</div>
+
+
+			</section>
+		</header>
+
+		<section id="content-container" class="my-account">
+
+			<article class="content">
+
+        <h2>Mon compte</h2>
+
+        <form action="#" method="post">
+					<fieldset>
+            <legend>Données personnelles</legend>
+            <p>
+              <label for="civility">Civilité</label>
+              <select name="civility" id="civility">
+                <option value="null"></option>
+                <option value="male">Homme</option>
+                <option value="female">Femme</option>
+              </select>
+            </p>
+            <div>
+              <p>
+                <label for="firstname">Prénom</label>
+                <input type="text" name="firstname" id="firstname">
+              </p>
+              <p>
+                <label for="name">Nom</label>
+                <input type="text" name="name" id="name">
+              </p>
+            </div>
+            <div>
+              <p>
+                <label for="email">Courriel</label>
+                <input type="email" name="email" id="email" required>
+              </p>
+              <p>
+                <label for="phone">Téléphone</label>
+                <input type="tel" name="phone" id="phone">
+              </p>
+            </div>
+            <p>
+              <label for="address">Adresse</label>
+              <input type="text" name="address" id="address">
+            </p>
+            <div>
+              <p>
+                <label for="zip-code">Code Postal</label>
+                <input type="text" name="phone" id="phone" minlength="5" maxlength="5">
+              </p>
+              <p>
+                <label for="city">Ville</label>
+                <select name="city" id="city">
+                </select>
+              </p>
+            </div>
+						<input class="submit" type="submit" value="Enregistrer">
+					</fieldset>
+        </form>
+
+				<div class="data-connection">
+
+					<form action="#" method="POST">
+						<fieldset>
+							<legend>Nom d'utilisateur</legend>
+							<p>
+								<label for="username">Nom d'utilisateur</label>
+								<input type="text" name="username" id="username" required>
+							</p>
+							<input class="submit" type="submit" value="Enregistrer">
+						</fieldset>
+					</form>
+
+					<form>
+						<fieldset>
+							<legend>Mot de passe</legend>
+							<div>
+								<p>
+									<label for="password1">Mot de passe</label>
+									<input type="password" name="password1" id="password1" required>
+								</p>
+								<p>
+									<label for="password2">Confirmation du mot de passe</label>
+									<input type="password" name="password2" id="password2" required>
+								</p>
+							</div>
+							<input class="submit" type="submit" value="Enregistrer">
+						</fieldset>						
+					</form>
+
+				</div>
+
+      </article>
+	  </section>
+
+	</div>
+</body>
+</html>
