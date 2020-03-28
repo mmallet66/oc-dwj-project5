@@ -409,3 +409,26 @@ header {
   cursor: pointer;
   transition: 0.3s;
 }
+
+/* ---- User Announces ---- */
+
+#content-container.my-announces table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 90%;
+}
+
+#content-container.my-announces table th {
+  color: #ffce6b;
+  text-align: left;
+}
+
+#content-container.my-announces table tr {
+  background-color: #4fb6bb60;
+  border-bottom: 1px solid #fff;
+  height: 35px;
+}
+
+#content-container.my-announces table thead, #content-container.my-announces table tr:hover {
+  background-color: #4fb6bb;
+}
