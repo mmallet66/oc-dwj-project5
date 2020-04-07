@@ -222,6 +222,22 @@ header {
   text-indent: 0.188em;
 }
 
+#content-container form label {
+  display: flex;
+  justify-content: space-between;
+}
+
+#content-container form label strong {
+  color: #ff6e6b;
+  font-weight: normal;
+}
+
+#content-container form label strong i{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
 #content-container form input.submit {
   background-color: #4fb6bb60;
   cursor: pointer;
@@ -233,6 +249,49 @@ header {
 #content-container form input.submit:hover {
   background-color: #4fb6bb;
   transition: 0.3s;
+}
+
+#content-container i#show-password {
+  color: #cad1d9;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  top: -36%;
+  right: -92%;
+  width: 1rem;
+}
+
+#content-container i#show-password:hover {
+  color: #000000;
+}
+
+[data-title] {
+  position: relative;
+  cursor: help;
+}
+
+#content-container input:hover~[data-title]::before {
+  content: attr(data-title);
+  position: absolute;
+  bottom: -26px;
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: #ffce6b;
+  color: #000;
+  font-size: 12px;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+
+#content-container input:hover~[data-title]::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 8px;
+  display: inline-block;
+  border: 8px solid transparent;	
+  border-bottom: 8px solid #ffce6b;
 }
 
 /* 
