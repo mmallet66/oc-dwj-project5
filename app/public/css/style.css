@@ -41,7 +41,7 @@ div#page {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4) ;
   margin: 0 auto;
   min-width: 1024px;
-  width: 70%;
+  width: 80%;
 }
 
 /* ---- Header ---- */
@@ -428,4 +428,137 @@ header {
   background-color: #4fb6bb;
 }
 
-/* ---- Create Announce ---- */
+/* ---- Search ---- */
+
+#search-form-container, .search-result-list-item {
+  border-radius: 4px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+#search-form-container, #search-result-container {
+  margin: 0 auto 3em;
+  width: 95%;
+}
+
+#search-form {
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+}
+
+#search-form .search-form-item:nth-child(2) {
+  position: relative;
+}
+
+#research-location-submenu {
+  background-color: #ffffff;
+  border-radius: 4px;
+  top: 78%;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+  padding: 0.2em;
+  position: absolute;
+  display: none;
+  width: 98%;
+}
+
+#research-location-submenu h3 {
+  border-bottom: 1px solid black;
+  font-weight: normal;
+  margin: 0;
+}
+
+#research-location-submenu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#research-location-submenu li {
+  cursor: pointer;
+}
+
+#content-container #search-form input.submit{
+  width: 100%;
+}
+
+#search-form .search-form-item {
+  align-items: center;
+  width: 30%;
+}
+
+#search-form div label {
+  margin-right: 0.5em;
+}
+
+#search-form div input {
+  margin: 0;
+}
+
+#search-result-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.search-result-list-item {
+  color: unset;
+  display: flex;
+  height: 180px;
+  margin-bottom: 1em;
+  text-decoration: none;
+}
+
+.item-picture-container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 20%;
+}
+
+.item-picture {
+  margin: auto;
+  max-height: 99%;
+  max-width: 99%;
+}
+
+.item-description-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  max-width: 79%;
+  padding: 0 0.5%;
+}
+
+.item-description-title>h3, .item-description-price, .item-description-text {
+  margin: 0;
+}
+
+.item-description-title, .item-description-price {
+  height: 10%;
+}
+
+.item-description-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-description-title>span {
+  color: black;
+  font-weight: normal;
+}
+
+.item-description-text {
+  height: 60%;
+  text-align: justify;
+  overflow-y: auto;
+}
+
+.search-result-list-item:hover .item-description-title, .item-description-price {
+  color: #ff6e6b;
+}
+
+.item-description-price {
+  font-weight: bold;
+  font-size: 1.17em;
+  margin: 0;
+}
