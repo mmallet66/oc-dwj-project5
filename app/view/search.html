@@ -40,9 +40,38 @@
 			</section>
 		</header>
 
-		<section id="content-container" class="page-name">
+		<section id="content-container" class="search">
+			<article class="content">
+				<h2>Annonces</h2>
+
+				<div id="search-form-container">
+					<form id="search-form">
+						<div class="search-form-item">
+							<label for="" class="fas fa-search"></label>
+							<input type="search" placeholder="Que recherchez-vous ?">
+						</div>
+						<div class="search-form-item">
+							<label for="" class="fas fa-map-marker-alt"></label>
+							<input type="text" id="research-location" placeholder="Entrez un nom de ville">
+						</div>
+						<div class="search-form-item">
+							<input class="submit" type="submit" value="Rechercher !">
+						</div>
+					</form>
+				</div>
+
+				<div id="search-result-container">
+					<p>Résultats pour : <span>Occitanie</span></p>
+					<ul id="search-result-list">
+
+
+					</ul>
+				</div>
+			</article>
 	  </section>
 
 	</div>
+
+	<script src="../public/js/research.js"></script>
 </body>
 </html>

@@ -41,7 +41,7 @@ div#page {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4) ;
   margin: 0 auto;
   min-width: 1024px;
-  width: 70%;
+  width: 80%;
 }
 
 /* ---- Header ---- */
@@ -177,6 +177,123 @@ header {
   text-align: center;
 }
 
+/* ---- Form ---- */
+
+#content-container form fieldset {
+  margin: 0 auto 0.8em;
+  width: 95%;
+}
+
+#content-container form div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#content-container form p {
+  margin-top: 0;
+  width: 49%;
+}
+
+#content-container form label {
+  font-size: 0.9rem;
+}
+
+#content-container form input, #content-container form textarea {
+  padding: 0.846em;
+  width: calc(100% - 0.846em*2 - 2px);
+}
+
+#content-container form select {
+  padding: 0.78em;
+  width: 98.6%;
+}
+
+#content-container form textarea {
+  height: 300px;
+  resize: vertical;
+}
+
+#content-container form input, #content-container form select, #content-container form textarea {
+  background: #fff;
+  border: 1px solid #cad1d9;
+  border-radius: 4px;
+  display: block;
+  margin: 0.385em 0 0;
+  text-indent: 0.188em;
+}
+
+#content-container form label {
+  display: flex;
+  justify-content: space-between;
+}
+
+#content-container form label strong {
+  color: #ff6e6b;
+  font-weight: normal;
+}
+
+#content-container form label strong i{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+#content-container form input.submit {
+  background-color: #4fb6bb60;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 0.8em auto;
+  width: 50%;
+}
+
+#content-container form input.submit:hover {
+  background-color: #4fb6bb;
+  transition: 0.3s;
+}
+
+#content-container i#show-password {
+  color: #cad1d9;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  top: -36%;
+  right: -92%;
+  width: 1rem;
+}
+
+#content-container i#show-password:hover {
+  color: #000000;
+}
+
+[data-title] {
+  position: relative;
+  cursor: help;
+}
+
+#content-container input:hover~[data-title]::before {
+  content: attr(data-title);
+  position: absolute;
+  bottom: -26px;
+  display: inline-block;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: #ffce6b;
+  color: #000;
+  font-size: 12px;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+
+#content-container input:hover~[data-title]::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 8px;
+  display: inline-block;
+  border: 8px solid transparent;	
+  border-bottom: 8px solid #ffce6b;
+}
+
 /* 
 ##############################
 ###       PAGE STYLE       ###
@@ -275,139 +392,17 @@ header {
   width: 70%;
 }
 
-#content-container.connection form label {
-  font-size: 0.9rem;
+#content-container.connection form p {
+  width: unset;
 }
 
 #content-container.connection form input {
-  background: #ffffff;
-  border: 1px solid #cad1d9;
-  border-radius: 4px;
-  display: block;
   margin: 0.385em auto 0;
-  padding: 0.846em;
-  text-indent: 0.188em;
   width: 90%;
 }
 
-#content-container.connection form input#submit {
-  background-color: #4fb6bb60;
-  cursor: pointer;
-  font-size: 0.9rem;
+#content-container.connection form input.submit {
   width: calc(90% + 0.846em*2 + 2px);
-}
-
-#content-container.connection form input#submit:hover {
-  background-color: #4fb6bb;
-  transition: 0.3s;
-}
-
-/* ---- Registration ---- */
-
-#content-container.registration form fieldset {
-  margin: 0 auto 0.8em;
-  width: 95%;
-}
-
-#content-container.registration form fieldset div {
-  display: flex;
-  justify-content: space-between;
-}
-
-#content-container.registration form p {
-  margin-top: 0;
-  width: 49%;
-}
-
-#content-container.registration form label {
-  font-size: 0.9rem;
-}
-
-#content-container.registration form input, select {
-  background: #fff;
-  border: 1px solid #cad1d9;
-  border-radius: 4px;
-  display: block;
-  text-indent: 0.188em;
-}
-
-#content-container.registration form input{
-  margin: 0.385em 0 0;
-  padding: 0.846em;
-  width: calc(100% - 0.846em*2 - 2px);
-}
-
-#content-container.registration form select{
-  margin: 0.385em 0 0;
-  padding: 0.78em;
-  width: 98.6%;
-}
-
-#content-container.registration form input#submit {
-  background-color: #4fb6bb60;
-  font-size: 0.9rem;
-  margin: 0.8em auto;
-  width: 50%;
-}
-
-#content-container.registration form input#submit:hover {
-  background-color: #4fb6bb;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-/* ---- Profile ---- */
-
-#content-container.my-account form fieldset {
-  margin: 0 auto 0.8em;
-  width: 95%;
-}
-
-#content-container.my-account form fieldset div {
-  display: flex;
-  justify-content: space-between;
-}
-
-#content-container.my-account form p {
-  margin-top: 0;
-  width: 49%;
-}
-
-#content-container.my-account form label {
-  font-size: 0.9rem;
-}
-
-#content-container.my-account form input, select {
-  background: #fff;
-  border: 1px solid #cad1d9;
-  border-radius: 4px;
-  display: block;
-  text-indent: 0.188em;
-}
-
-#content-container.my-account form input{
-  margin: 0.385em 0 0;
-  padding: 0.846em;
-  width: calc(100% - 0.846em*2 - 2px);
-}
-
-#content-container.my-account form select{
-  margin: 0.385em 0 0;
-  padding: 0.78em;
-  width: 98.6%;
-}
-
-#content-container.my-account form input.submit {
-  background-color: #4fb6bb60;
-  font-size: 0.9rem;
-  margin: 0.8em auto;
-  width: 50%;
-}
-
-#content-container.my-account form input.submit:hover {
-  background-color: #4fb6bb;
-  cursor: pointer;
-  transition: 0.3s;
 }
 
 /* ---- User Announces ---- */
@@ -431,4 +426,139 @@ header {
 
 #content-container.my-announces table thead, #content-container.my-announces table tr:hover {
   background-color: #4fb6bb;
+}
+
+/* ---- Search ---- */
+
+#search-form-container, .search-result-list-item {
+  border-radius: 4px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+#search-form-container, #search-result-container {
+  margin: 0 auto 3em;
+  width: 95%;
+}
+
+#search-form {
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+}
+
+#search-form .search-form-item:nth-child(2) {
+  position: relative;
+}
+
+#research-location-submenu {
+  background-color: #ffffff;
+  border-radius: 4px;
+  top: 78%;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+  padding: 0.2em;
+  position: absolute;
+  display: none;
+  width: 98%;
+}
+
+#research-location-submenu h3 {
+  border-bottom: 1px solid black;
+  font-weight: normal;
+  margin: 0;
+}
+
+#research-location-submenu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#research-location-submenu li {
+  cursor: pointer;
+}
+
+#content-container #search-form input.submit{
+  width: 100%;
+}
+
+#search-form .search-form-item {
+  align-items: center;
+  width: 30%;
+}
+
+#search-form div label {
+  margin-right: 0.5em;
+}
+
+#search-form div input {
+  margin: 0;
+}
+
+#search-result-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.search-result-list-item {
+  color: unset;
+  display: flex;
+  height: 180px;
+  margin-bottom: 1em;
+  text-decoration: none;
+}
+
+.item-picture-container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 20%;
+}
+
+.item-picture {
+  margin: auto;
+  max-height: 99%;
+  max-width: 99%;
+}
+
+.item-description-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  max-width: 79%;
+  padding: 0 0.5%;
+}
+
+.item-description-title>h3, .item-description-price, .item-description-text {
+  margin: 0;
+}
+
+.item-description-title, .item-description-price {
+  height: 10%;
+}
+
+.item-description-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-description-title>span {
+  color: black;
+  font-weight: normal;
+}
+
+.item-description-text {
+  height: 60%;
+  text-align: justify;
+  overflow-y: auto;
+}
+
+.search-result-list-item:hover .item-description-title, .item-description-price {
+  color: #ff6e6b;
+}
+
+.item-description-price {
+  font-weight: bold;
+  font-size: 1.17em;
+  margin: 0;
 }

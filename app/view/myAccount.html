@@ -27,6 +27,7 @@
 					<ul class="user-menu-list">
 						<li class="user-menu-list-item"><a href="myAccount.html">Mon compte</a></li>
 						<li class="user-menu-list-item"><a href="myAnnounces.html">Mes annonces</a></li>
+						<li class="user-menu-list-item"><a href="createAnnounce.html">Déposer une annonce</a></li>
 						<li class="user-menu-list-item"><a href="#">Me déconnecter</a></li>
 					</ul>
 				</div>
@@ -65,11 +66,13 @@
             <div>
               <p>
                 <label for="email">Courriel</label>
-                <input type="email" name="email" id="email" required>
+                <input type="email" name="email" class="input-mail" id="email" placeholder="adresse@mail.fr" required>
+                <span data-title="Doit correspondre à une adresse mail"></span>
               </p>
               <p>
                 <label for="phone">Téléphone</label>
-                <input type="tel" name="phone" id="phone">
+                <input type="tel" name="phone" class="input-phone" id="phone" placeholder="0102030405">
+                <span data-title="Veuillez saisir un numéro au format : 0102030405"></span>
               </p>
             </div>
             <p>
@@ -79,7 +82,8 @@
             <div>
               <p>
                 <label for="zip-code">Code Postal</label>
-                <input type="text" name="phone" id="phone" minlength="5" maxlength="5">
+                <input type="text" name="zip-code" class="input-zip-code" id="zip-code" placeholder="Ex. 75001">
+                <span data-title="Veuillez saisir un numéro au format : 75012"></span>
               </p>
               <p>
                 <label for="city">Ville</label>
@@ -109,12 +113,14 @@
 							<legend>Mot de passe</legend>
 							<div>
 								<p>
-									<label for="password1">Mot de passe</label>
-									<input type="password" name="password1" id="password1" required>
+									<label for="password1">Mot de passe <strong id="message-password" hidden>Mots de passe différents</strong></label>
+									<input type="password" name="password1" class="input-password" id="password1" required>
+									<span data-title="Au moins 8 caractères dont 1 min, 1 MAJ et 1 chiffre"></span>
+									<i class="fas fa-eye" id="show-password"></i>
 								</p>
 								<p>
 									<label for="password2">Confirmation du mot de passe</label>
-									<input type="password" name="password2" id="password2" required>
+									<input type="password" name="password2" class="input-password" id="password2" required>
 								</p>
 							</div>
 							<input class="submit" type="submit" value="Enregistrer">
@@ -127,5 +133,6 @@
 	  </section>
 
 	</div>
+	<script src="../public/js/formTraitment.js"></script>
 </body>
 </html>
