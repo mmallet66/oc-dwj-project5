@@ -1,45 +1,47 @@
+function ajaxGet(url, callback) {
+  const xhr = new XMLHttpRequest;
+  xhr.open("GET", url);
+
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4 && xhr.status === 200) {
+      callback(JSON.parse(xhr.responseText));
+    }
+  }
+
+  xhr.send(null);
+}
+
 function getCityData(zipCode) {
   if(zipCode != "") {
-    const url = "https://api-adresse.data.gouv.fr/search/?q="+zipCode+"&type=municipality&limit=50";
-    const xhr = new XMLHttpRequest;
+    const url = "https://geo.api.gouv.fr/communes?codePostal="+zipCode;
 
-    xhr.open("GET", url);
-
-    xhr.onreadystatechange = () => {
-      if(xhr.readyState === 4 && xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
-        showCityName("city", response.features);
-      }
-    }
-
-    xhr.send(null);
+    ajaxGet(url, updateCityList);
   }
   else {
-    showCityName("city");
+    updateCityList([]);
   }
 }
 
-function showCityName(targetEltId, cityList = false) {
-  const select = document.getElementById(targetEltId);
+function updateCityList(cityList) {
+  while(cityListContainer.hasChildNodes()) {
+    cityListContainer.removeChild(cityListContainer.firstChild);
+  }
 
-  emptySelectElt(select);
-  if(cityList) {
+  if(cityList.length != 0) {
     cityList.forEach(city => {
-      const cityName = city.properties.name;
-
-      const optionElt             = document.createElement("option");
-            optionElt.value       = cityName.toLowerCase();
-            optionElt.textContent = cityName.toUpperCase();
-
-      select.appendChild(optionElt);
+      createCityItem(city);
     });
   }
 }
 
-function emptySelectElt(select) {
-  while(select.hasChildNodes()) {
-    select.removeChild(select.firstChild);
-  }
+function createCityItem(cityData) {
+  const cityName = cityData.nom;
+
+  const optionElt             = document.createElement("option");
+        optionElt.value       = cityName.toLowerCase();
+        optionElt.textContent = cityName.toUpperCase();
+
+  cityListContainer.appendChild(optionElt);
 }
 
 function checkInputElt(inputElt) {
@@ -82,8 +84,8 @@ function editInputElt(inputElt, checked=true) {
 }
 
 function checkSamePasswords(firstEltId, secondEltId) {
-  const firstElt = document.getElementById(firstEltId);
-  const secondElt = document.getElementById(secondEltId);
+  const firstElt   = document.getElementById(firstEltId);
+  const secondElt  = document.getElementById(secondEltId);
   const messageElt = document.getElementById("message-password");
 
   messageElt.hidden = (firstElt.value === secondElt.value)|| false;
@@ -95,40 +97,43 @@ function checkSamePasswords(firstEltId, secondEltId) {
 ##############################
 */
 
-const inputElts = document.querySelectorAll("input");
-const showPasswordElt  = document.getElementById("show-password");
+const inputElts         = document.querySelectorAll("input");
+const showPasswordElt   = document.getElementById("show-password");
+const cityListContainer = document.getElementById("city");
 
 inputElts.forEach(input => {
   input.addEventListener("change", function() {
     checkInputElt(this);
 
     switch(this.id) {
-      case "zip-code":
+      case "zip-code": 
         getCityData(this.value);
         break;
-      case "password2":
+      case "password2": 
         checkSamePasswords("password1", "password2");
         break;
-      case "password1":
+      case "password1": 
         checkSamePasswords("password1", "password2");
         break;
     }
   })
 })
 
-showPasswordElt.addEventListener("click", function() {
-  const inputPasswordElts = document.querySelectorAll(".input-password");
-
-  if (this.classList.contains("fa-eye")) {
-    inputPasswordElts.forEach(inputElt => {
-      inputElt.setAttribute("type", "text");
-    })
-    this.classList.replace("fa-eye", "fa-eye-slash");
-  }
-  else if (this.classList.contains("fa-eye-slash")) {
-    inputPasswordElts.forEach(inputElt => {
-      inputElt.setAttribute("type", "password");
-    })
-    this.classList.replace("fa-eye-slash", "fa-eye");
-  }
-})
+if(showPasswordElt){
+  showPasswordElt.addEventListener("click", function() {
+    const inputPasswordElts = document.querySelectorAll(".input-password");
+  
+    if (this.classList.contains("fa-eye")) {
+      inputPasswordElts.forEach(inputElt => {
+        inputElt.setAttribute("type", "text");
+      })
+      this.classList.replace("fa-eye", "fa-eye-slash");
+    }
+    else if (this.classList.contains("fa-eye-slash")) {
+      inputPasswordElts.forEach(inputElt => {
+        inputElt.setAttribute("type", "password");
+      })
+      this.classList.replace("fa-eye-slash", "fa-eye");
+    }
+  })
+}
