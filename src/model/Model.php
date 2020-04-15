@@ -6,10 +6,10 @@ require_once '/home/mathieu/documents/oc-dwj-project5/config/prod.php';
 
 abstract class Model
 {
-  protected $db;
+    protected $db;
 
-  protected function dbConnect()
-  {
-    $this->db = new \PDO(DSN, USER, PASSWD);
-  }
+    protected function dbConnect()
+    {
+        $this->db = new \PDO(DSN, USER, PASSWD);
+    }
 }
