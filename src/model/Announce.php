@@ -1,6 +1,6 @@
 <?php
 
-namespace occazou\src\model;
+namespace Occazou\Src\Model;
 
 /**
  * Class Announce
@@ -23,6 +23,11 @@ class Announce
     /**
      * @var string
      */
+    private $authorUsername;
+
+    /**
+     * @var string
+     */
     private $title;
 
     /**
@@ -36,9 +41,14 @@ class Announce
     private $price;
 
     /**
-     * @var int
+     * @var string
      */
-    private $pictureId;
+    private $city;
+
+    /**
+     * @var string
+     */
+    private $picturePath;
 
     /**
      * @var string
@@ -77,13 +87,23 @@ class Announce
     }
 
     /**
-     * Set the value of authorId
+     * Set the value of authoId
      *
      * @param int $authorId
      */ 
     private function setAuthorId($authorId)
     {
         $this->authorId = (int) $authorId;
+    }
+
+    /**
+     * Set the value of authorUsername
+     *
+     * @param string $authorUsername
+     */ 
+    private function setAuthorUsername($authorUsername)
+    {
+        $this->authorUsername = (is_string($authorUsername))? $authorUsername : null;
     }
 
     /**
@@ -109,11 +129,21 @@ class Announce
     /**
      * Set the value of price
      *
-     * @param float $price
+     * @param int $price
      */ 
     public function setPrice($price)
     {
-        $this->price = (float) $price;
+        $this->price = (int) $price;
+    }
+
+    /**
+     * Set the value of city
+     *
+     * @param string $city
+     */ 
+    public function setCity($city)
+    {
+        $this->city = (is_string($city))? $city : null;
     }
 
     /**
@@ -124,6 +154,16 @@ class Announce
     public function setPictureId($pictureId)
     {
         $this->pictureId = (int) $pictureId;
+    }
+
+    /**
+     * Set the value of picturePath
+     *
+     * @param string $picturePath
+     */ 
+    public function setPicturePath($picturePath)
+    {
+        $this->picturePath = 'public/img/'.$picturePath;
     }
 
     /**
@@ -139,9 +179,12 @@ class Announce
 // GETTERS
     public function getId(){return $this->id;}
     public function getAuthorId(){return $this->authorId;}
+    public function getAuthorUsername(){return $this->authorUsername;}
     public function getTitle(){return $this->title;}
     public function getText(){return $this->text;}
     public function getPrice(){return $this->price;}
+    public function getCity(){return $this->city;}
     public function getPictureId(){return $this->pictureId;}
+    public function getPicturePath(){return $this->picturePath;}
     public function getCreationDate(){return $this->creationDate;}
 }
