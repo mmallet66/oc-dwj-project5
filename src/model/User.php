@@ -175,8 +175,8 @@ class User
      * @param string Value assigned to $city property
      */
     public function setCity($city=null)
-    {
-        $this->city = (is_string($city))? $city : null;
+    {   
+        $this->city = (is_string($city))? strtoupper($city) : null;
     }
 
 // GETTERS
