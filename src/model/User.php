@@ -160,7 +160,7 @@ class User
     {
         $regExp = '/^[0-9]{9}$/';
 
-        $this->phone = preg_match($regExp, $phone)? '0'.$phone : null;
+        $this->phone = preg_match($regExp, $phone)? $phone : null;
     }
 
     /**
