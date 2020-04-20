@@ -562,3 +562,12 @@ header {
   font-size: 1.17em;
   margin: 0;
 }
+
+/* ---- Error ---- */
+
+#content-container.error > h2 {
+  color: #4fb6bb;
+  font-size: 4em;
+  grid-column: 1/13;
+  text-align: center;
+}
