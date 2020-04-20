@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href='public/css/style.css'>
+    <link rel="stylesheet" href=<?= ROOTPATH . 'public/css/style.css' ?>>
     <title><?= 'Occaz\' Où - '.$title ?></title>
 </head>
 <body>
