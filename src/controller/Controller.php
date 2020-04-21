@@ -2,11 +2,42 @@
 
 namespace Occazou\Src\Controller;
 
+/**
+ * Class Controller
+ */
 class Controller
 {
+    /**
+     * Generate a view
+     * 
+     * @param string $view View's name
+     * @param array $data=null
+     */
     public function getView(string $view, array $data=null)
     {
         $view = new \Occazou\Src\View\View($view);
         $view->generate($data);
+    }
+
+    /**
+     * Creates the session when a user tries to connect
+     */
+    public function connectUser()
+    {
+        if(!empty($_POST['username']) && !empty($_POST['password'])):
+
+            $userModel = new \Occazou\Src\Model\UserModel();
+            $user = new \Occazou\Src\Model\User();
+            $user->hydrate($userModel->getUser($_POST['username']));
+
+            if(password_verify($_POST['password'], $user->getPassword())):
+                session_start();
+                $_SESSION['username'] = $user->getUsername();
+                echo 'true';
+            else:
+                echo 'false';
+            endif;
+
+        endif;
     }
 }

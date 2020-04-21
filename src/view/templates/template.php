@@ -21,7 +21,7 @@ session_start();
                     <label for="connection-check" id="connection">
                         <div>
                             <i id="user-icon" class="far fa-user"></i>
-                            <p id="username"><?= $_SESSION['username'] ?></p>
+                            <p id="username"><?= htmlspecialchars($_SESSION['username']) ?></p>
                         </div>
                     </label>
     
