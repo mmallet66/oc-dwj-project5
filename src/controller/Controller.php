@@ -40,4 +40,20 @@ class Controller
 
         endif;
     }
+
+    public function disconnectUser()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(!empty($_SESSION['username'])):
+            session_unset();
+            header('Location:/');
+            // echo '<pre>';
+            // print_r($_SERVER);
+            // echo '</pre>';
+        else:
+            throw new \Exception('');
+        endif;
+    }
 }

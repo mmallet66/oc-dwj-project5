@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,7 +34,7 @@ session_start();
                             <li class="user-menu-list-item"><a href="myAccount.html">Mon compte</a></li>
                             <li class="user-menu-list-item"><a href="myAnnounces.html">Mes annonces</a></li>
                             <li class="user-menu-list-item"><a href="createAnnounce.html">Déposer une annonce</a></li>
-                            <li class="user-menu-list-item"><a href="#">Me déconnecter</a></li>
+                            <li class="user-menu-list-item"><a href="disconnect-user">Me déconnecter</a></li>
                         </ul>
                     </div>
                 <?php
