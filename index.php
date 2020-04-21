@@ -2,8 +2,6 @@
 
 namespace Occazou;
 
-define('ROOTPATH', __DIR__.'/');
-
 require_once 'Autoloader.php';
 
 Autoloader::register();

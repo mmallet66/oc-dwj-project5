@@ -1,6 +1,6 @@
 <?php
 $this->title = 'Accueil';
-$this->scriptPath = ROOTPATH.'public/js/map.js';
+$this->scriptPath = '/public/js/map.js';
 ?>
 <article id="message-container">
     <p id="message">Sélectionnez votre région pour effectuer une recherche. Pour déposer une annonce, veuillez vous connecter ...</p>

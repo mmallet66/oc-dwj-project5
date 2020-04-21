@@ -8,11 +8,11 @@ class View
     private $name;
     private $title;
     private $scriptPath = null;
-    private $template = ROOTPATH.'src/view/templates/template.php';
+    private $template = 'src/view/templates/template.php';
 
     public function __construct(string $view)
     {
-        $this->file = ROOTPATH.'src/view/templates/' . $view . '.php';
+        $this->file = 'src/view/templates/' . $view . '.php';
         $this->name = $view;
     }
 
