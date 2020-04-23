@@ -19,5 +19,5 @@ $this->scriptPath = '/public/js/connection.js';
         </p>
     </form>
 
-    <p>Vous n'êtes pas encore inscrit ? <a href="registration">S'inscrire</a></p>
+    <p>Vous n'êtes pas encore inscrit ? <a href="/registration">S'inscrire</a></p>
 </article>
