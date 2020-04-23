@@ -34,14 +34,14 @@ if (session_status() == PHP_SESSION_NONE) {
                             <li class="user-menu-list-item"><a href="myAccount.html">Mon compte</a></li>
                             <li class="user-menu-list-item"><a href="myAnnounces.html">Mes annonces</a></li>
                             <li class="user-menu-list-item"><a href="createAnnounce.html">Déposer une annonce</a></li>
-                            <li class="user-menu-list-item"><a href="disconnect-user">Me déconnecter</a></li>
+                            <li class="user-menu-list-item"><a href="/disconnect-user">Me déconnecter</a></li>
                         </ul>
                     </div>
                 <?php
                 else:
                 ?>
         <!-- Connection link, displayed if a user is logged -->
-        <a id="connection-link" href="connection">Se connecter</a>
+        <a id="connection-link" href="/connection">Se connecter</a>
                 <?php
                 endif;
                 ?>
