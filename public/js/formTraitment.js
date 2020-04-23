@@ -11,6 +11,21 @@ function ajaxGet(url, callback) {
   xhr.send(null);
 }
 
+function ajaxPost(data, url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', url);
+
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4 && xhr.status === 200) {
+          callback(xhr.responseText);
+      }
+  }
+  
+  xhr.send(data);
+}
+
 function getCityData(zipCode) {
   if(zipCode != "") {
     const url = "https://geo.api.gouv.fr/communes?codePostal="+zipCode;
@@ -91,6 +106,71 @@ function checkSamePasswords(firstEltId, secondEltId) {
   messageElt.hidden = (firstElt.value === secondElt.value)|| false;
 }
 
+function encode(data) {
+  let urlEncodedData = "";
+  let urlEncodedDataPairs = [];
+  let name;
+
+  for(name in data) {
+    urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+  }
+
+  urlEncodedData = urlEncodedDataPairs.join('&').replace(/%40/g, '@').replace(/%20/g, '_');
+
+  return(urlEncodedData);
+}
+
+function getDataEntered(formElement) {
+  let data = {};
+  let inputElementsList = formElement.querySelectorAll('input');
+  let selectElementList = formElement.querySelectorAll('select');
+
+  inputElementsList.forEach((inputElt) => {
+    if(inputElt.type!='submit' && inputElt.name!='password2') {
+      switch(inputElt.name) {
+        case 'password1':
+          data['password'] = inputElt.value;
+          break;
+        case 'zip-code':
+          data['zipCode'] = inputElt.value;
+          break;
+        default:
+          data[inputElt.name]=inputElt.value;
+          break;
+      }
+    }
+  })
+  
+  selectElementList.forEach((selectElt) => {
+    switch(selectElt.name) {
+      case 'city':
+        data['cityName'] = selectElt.value;
+        break;
+      default:
+        data[selectElt.name] = selectElt.value;
+        break;
+    }
+  })
+
+  return data;
+}
+
+function checkNecessaryData() {
+  const necessaryData = [];
+  necessaryData.push(document.getElementById('username').value)
+  necessaryData.push(document.getElementById('password1').value)
+  necessaryData.push(document.getElementById('password2').value)
+  necessaryData.push(document.getElementById('email').value)
+
+  let isCheck = 0;
+
+  necessaryData.forEach((element)=>{
+    (element != '') && isCheck++
+  })
+
+  return isCheck;
+}
+
 /* 
 ##############################
 ###          MAIN          ###
@@ -100,6 +180,7 @@ function checkSamePasswords(firstEltId, secondEltId) {
 const inputElts         = document.querySelectorAll("input");
 const showPasswordElt   = document.getElementById("show-password");
 const cityListContainer = document.getElementById("city");
+const formElts          = document.querySelectorAll('form');
 
 inputElts.forEach(input => {
   input.addEventListener("change", function() {
@@ -137,3 +218,23 @@ if(showPasswordElt){
     }
   })
 }
+
+formElts.forEach((form) => {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(checkNecessaryData() == 4){
+
+      let dataEntered = getDataEntered(this);
+
+      ajaxPost(encode(dataEntered),this.action,(response)=>{
+          (response == 1)? document.location.href='/connection' : alert('Ce nom d\'utilisateur est déjà utilisé.');
+      })
+        
+    }
+    else {
+      alert('Veuillez remplir tous les champs nécessaires !');
+    }
+  })
+})
