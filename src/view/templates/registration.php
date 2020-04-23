@@ -5,25 +5,25 @@ $this->scriptPath = '/public/js/formTraitment.js';
 <article class="content">
 
     <h2>Inscription</h2>
-
-    <form action="#" method="post">
+    <!-- action='new-user' -->
+    <form action='new-user' method="post">
         <fieldset>
             <legend>Informations de connexion</legend>
 
             <p>
                 <label for="username">Nom d'utilisateur</label>
-                <input type="text" name="username" id="username" required>
+                <input type="text" name="username" id="username" autocomplete="username" required>
             </p>
             <div>
                 <p>
                     <label for="password1">Mot de passe <strong id="message-password" hidden>Mots de passe différents</strong></label>
-                    <input type="password" name="password1" class="input-password" id="password1" required>
+                    <input type="password" name="password1" class="input-password" id="password1" autocomplete="new-password" required>
                     <span data-title="Au moins 8 caractères dont 1 min, 1 MAJ et 1 chiffre"></span>
                     <i class="fas fa-eye" id="show-password"></i>
                 </p>
                 <p>
                     <label for="password2">Confirmation du mot de passe</label>
-                    <input type="password" name="password2" class="input-password" id="password2" required>
+                    <input type="password" name="password2" class="input-password" id="password2" autocomplete="new-password" required>
                 </p>
             </div>
         </fieldset>
@@ -32,8 +32,8 @@ $this->scriptPath = '/public/js/formTraitment.js';
             <legend>Données personnelles</legend>
 
             <p>
-                <label for="civility">Civilité</label>
-                <select name="civility" id="civility">
+                <label for="gender">Civilité</label>
+                <select name="gender" id="gender">
                     <option value="null"></option>
                     <option value="male">Homme</option>
                     <option value="female">Femme</option>
