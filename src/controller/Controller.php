@@ -19,6 +19,22 @@ class Controller
         $view->generate($data);
     }
 
+    public function newUser()
+    {
+        if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email'])):
+            $user = new \Occazou\Src\Model\User();
+            $user->hydrate($_POST);
+
+            $userModel = new \Occazou\Src\Model\UserModel();
+            if($userModel->isNotFree($user->getUsername())):
+                echo 0;
+            else:
+                $userModel->addUser($user);
+                echo 1;
+            endif;
+        endif;
+    }
+
     /**
      * Creates the session when a user tries to connect
      */
@@ -49,9 +65,6 @@ class Controller
         if(!empty($_SESSION['username'])):
             session_unset();
             header('Location:/');
-            // echo '<pre>';
-            // print_r($_SERVER);
-            // echo '</pre>';
         else:
             throw new \Exception('');
         endif;
