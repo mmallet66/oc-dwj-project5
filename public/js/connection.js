@@ -13,12 +13,14 @@ function ajaxPost(data, url, callback) {
     xhr.send(data);
 }
 
-function maCallback(response) {
-    (response === 'true')? redirectToPreviousPage() : passwordError();
+function checkResponse(response) {
+    (response === 'true')? redirect() : passwordError();
 }
 
-function redirectToPreviousPage() {
-    window.history.go(-1);
+function redirect() {
+    const registrationUrl = 'http://occazou/registration';
+    const disconnectUserUrl = 'http://occazou/disconnect-user';
+    (document.referrer == registrationUrl || document.referrer == disconnectUserUrl)? document.location.href='/' : window.history.go(-1);
 }
 
 function passwordError() {
@@ -44,7 +46,7 @@ formElt.addEventListener('submit', (e) => {
 
     if(username != '' && password != '') {
         let dataEntered = 'username='+username+'&password='+password;
-        ajaxPost(dataEntered, 'http://occazou/connect-user', maCallback);
+        ajaxPost(dataEntered, 'http://occazou/connect-user', checkResponse);
     }
 
     e.preventDefault();
