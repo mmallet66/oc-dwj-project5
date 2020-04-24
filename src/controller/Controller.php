@@ -21,52 +21,27 @@ class Controller
 
     public function newUser()
     {
-        if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email'])):
-            $user = new \Occazou\Src\Model\User();
-            $user->hydrate($_POST);
-
-            $userModel = new \Occazou\Src\Model\UserModel();
-            if($userModel->isNotFree($user->getUsername())):
-                echo 0;
-            else:
-                $userModel->addUser($user);
-                echo 1;
-            endif;
-        endif;
+        $userController = new UserController();
+        $userController->new();
     }
 
-    /**
-     * Creates the session when a user tries to connect
-     */
     public function connectUser()
     {
-        if(!empty($_POST['username']) && !empty($_POST['password'])):
-
-            $userModel = new \Occazou\Src\Model\UserModel();
-            $user = new \Occazou\Src\Model\User();
-            $user->hydrate($userModel->getUser($_POST['username']));
-
-            if(password_verify($_POST['password'], $user->getPassword())):
-                session_start();
-                $_SESSION['username'] = $user->getUsername();
-                echo 'true';
-            else:
-                echo 'false';
-            endif;
-
-        endif;
+        $userController = new UserController();
+        $userController->connect();
     }
 
     public function disconnectUser()
     {
+        $this->getSession();
+        $userController = new UserController();
+        $userController->disconnect();
+    }
+
+    public function getSession()
+    {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        if(!empty($_SESSION['username'])):
-            session_unset();
-            header('Location:/');
-        else:
-            throw new \Exception('');
-        endif;
     }
 }
