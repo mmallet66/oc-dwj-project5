@@ -48,7 +48,7 @@ class Announce
     /**
      * @var string
      */
-    private $picturePath;
+    private $pictureName;
 
     /**
      * @var string
@@ -147,23 +147,13 @@ class Announce
     }
 
     /**
-     * Set the value of pictureId
+     * Set the value of pictureName
      *
-     * @param int $pictureId
+     * @param string $pictureName
      */ 
-    public function setPictureId($pictureId)
+    public function setPictureName($pictureName)
     {
-        $this->pictureId = (int) $pictureId;
-    }
-
-    /**
-     * Set the value of picturePath
-     *
-     * @param string $picturePath
-     */ 
-    public function setPicturePath($picturePath)
-    {
-        $this->picturePath = 'public/img/'.$picturePath;
+        $this->pictureName = $pictureName;
     }
 
     /**
@@ -184,7 +174,6 @@ class Announce
     public function getText(){return $this->text;}
     public function getPrice(){return $this->price;}
     public function getCity(){return $this->city;}
-    public function getPictureId(){return $this->pictureId;}
-    public function getPicturePath(){return $this->picturePath;}
+    public function getPictureName(){return $this->pictureName;}
     public function getCreationDate(){return $this->creationDate;}
 }

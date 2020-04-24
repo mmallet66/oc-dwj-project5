@@ -6,3 +6,5 @@ const DBNAME = 'occazou';
 const DSN = SGBDR.':host='.HOST.';dbname='.DBNAME.';charset=utf8';
 const USER = 'mathieu';
 const PASSWD = 'passe';
+
+const UPLOADS_DIR = 'public/img/uploads/';

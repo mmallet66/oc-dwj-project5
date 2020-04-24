@@ -1,6 +1,6 @@
 <?php
 $this->title = 'Création Annonce';
-$this->scriptPath = '/public/js/formTraitment.js';
+$this->scriptPath = '/public/js/addAnnounce.js';
 
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
@@ -10,16 +10,16 @@ if(!empty($_SESSION['username'])): ?>
 <article class="content">
     <h2>Créer une annonce</h2>
 
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="new-announce" method="POST" enctype="multipart/form-data">
 
         <fieldset>
             <legend>Titre de l'annonce</legend>
-            <input type="text" name="announceTitle" id="announceTitle" required>
+            <input type="text" name="title" id="title" required>
         </fieldset>
 
         <fieldset>
             <legend>Texte de l'annonce</legend>
-            <textarea type="text" name="announceText" id="announceText" required></textarea>
+            <textarea type="text" name="text" id="text" required></textarea>
         </fieldset>
 
         <fieldset>

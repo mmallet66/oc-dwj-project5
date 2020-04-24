@@ -26,14 +26,15 @@ class AnnounceModel extends Model
      */
     public function addAnnounce(object $announce)
     {
-        $req = $this->db->prepare('INSERT INTO announces(author_id, title, text, price, picture_id) VALUES(:authorId, :title, :text, :price, :pictureId)');
+        $req = $this->db->prepare('INSERT INTO announces(author_id, title, text, price, picture_name, city) VALUES(:authorId, :title, :text, :price, :pictureName, :city)');
 
         return $req->execute(array(
             ':authorId'=>$announce->getAuthorId(),
             ':title'=>$announce->getTitle(),
             ':text'=>$announce->getText(),
             ':price'=>$announce->getPrice(),
-            ':pictureId'=>$announce->getPictureId()
+            ':pictureName'=>$announce->getPictureName(),
+            ':city'=>$announce->getCity()
         ));
     }
 
@@ -60,5 +61,10 @@ class AnnounceModel extends Model
         $announceData = ($req->execute([$city]))? $req->fetch() : false;
 
         return $announceData;
+    }
+
+    public function savePicture(string $pictureTempPath, string $fileName)
+    {
+        return move_uploaded_file($pictureTempPath, UPLOADS_DIR.$fileName);
     }
 }

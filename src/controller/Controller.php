@@ -38,6 +38,22 @@ class Controller
         $userController->disconnect();
     }
 
+    public function newAnnounce()
+    {
+        $this->getSession();
+
+        $user = new \Occazou\Src\Model\User();
+        $userModel = new \Occazou\Src\Model\UserModel();
+        $user->hydrate($userModel->getUser($_SESSION['username']));
+
+        $announceController = new AnnounceController();
+        $announceController->new([
+            'authorId'=>$user->getId(),
+            'authorUsername'=>$user->getUsername(),
+            'city'=>$user->getCityName(),
+        ]);
+    }
+
     public function getSession()
     {
         if (session_status() == PHP_SESSION_NONE) {
