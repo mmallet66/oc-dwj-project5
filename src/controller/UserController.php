@@ -11,17 +11,21 @@ class UserController
 
     public function new()
     {
-        if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email'])):
+        if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['city_name'])):
             $user = new \Occazou\Src\Model\User();
             $user->hydrate($_POST);
 
             $userModel = new \Occazou\Src\Model\UserModel();
             if($userModel->isNotFree($user->getUsername())):
-                echo 0;
+                echo 'Le nom d\'utilisateur est déjà pris.';
             else:
+                $cityModel = new \Occazou\Src\Model\CityModel();
+                $user->city->setId($cityModel->getCityId($user->city));
                 $userModel->addUser($user);
                 echo 1;
             endif;
+        else:
+            echo 'Veuillez remplir tous les champs nécessaires.';
         endif;
     }
 

@@ -50,12 +50,13 @@ function updateCityList(cityList) {
 }
 
 function createCityItem(cityData) {
-  const cityName = cityData.nom;
-
+  const cityName   = cityData.nom;
+  const regionCode = cityData.codeRegion;
+  
   const optionElt             = document.createElement("option");
-        optionElt.value       = cityName.toLowerCase();
+        optionElt.value       = cityName.toLowerCase()+'/'+regionCode;
         optionElt.textContent = cityName.toUpperCase();
-
+  
   cityListContainer.appendChild(optionElt);
 }
 
@@ -107,7 +108,7 @@ function checkSamePasswords(firstEltId, secondEltId) {
 }
 
 function encode(data) {
-  let urlEncodedData = "";
+  let urlEncodedData      = "";
   let urlEncodedDataPairs = [];
   let name;
 
@@ -121,21 +122,21 @@ function encode(data) {
 }
 
 function getDataEntered(formElement) {
-  let data = {};
+  let data              = {};
   let inputElementsList = formElement.querySelectorAll('input');
   let selectElementList = formElement.querySelectorAll('select');
 
   inputElementsList.forEach((inputElt) => {
     if(inputElt.type!='submit' && inputElt.name!='password2') {
       switch(inputElt.name) {
-        case 'password1':
+        case 'password1': 
           data['password'] = inputElt.value;
           break;
-        case 'zip-code':
-          data['zipCode'] = inputElt.value;
+        case 'zip-code': 
+          data['city_zipCode'] = inputElt.value;
           break;
-        default:
-          data[inputElt.name]=inputElt.value;
+        default: 
+          data[inputElt.name] = inputElt.value;
           break;
       }
     }
@@ -144,9 +145,11 @@ function getDataEntered(formElement) {
   selectElementList.forEach((selectElt) => {
     switch(selectElt.name) {
       case 'city':
-        data['cityName'] = selectElt.value;
+        let value = selectElt.value.split('/');
+        data['city_name'] = value[0];
+        data['city_regionCode'] = value[1];
         break;
-      default:
+      default: 
         data[selectElt.name] = selectElt.value;
         break;
     }
@@ -161,6 +164,7 @@ function checkNecessaryData() {
   necessaryData.push(document.getElementById('password1').value)
   necessaryData.push(document.getElementById('password2').value)
   necessaryData.push(document.getElementById('email').value)
+  necessaryData.push(document.getElementById('city').value)
 
   let isCheck = 0;
 
@@ -224,12 +228,12 @@ formElts.forEach((form) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if(checkNecessaryData() == 4){
+    if(checkNecessaryData() == 5){
 
       let dataEntered = getDataEntered(this);
 
       ajaxPost(encode(dataEntered),this.action,(response)=>{
-          (response == 1)? document.location.href='/connection' : alert('Ce nom d\'utilisateur est déjà utilisé.');
+        (response == 1)? document.location.href = '/connection' : alert(response);
       })
         
     }
