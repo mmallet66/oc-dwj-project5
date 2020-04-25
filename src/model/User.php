@@ -61,14 +61,9 @@ class User
     private $address;
 
     /**
-     * @var string
+     * @var object
      */
-    private $cityName;
-
-    /**
-     * @var string
-     */
-    private $zipCode;
+    public $city;
 
 // METHODS
     /**
@@ -79,14 +74,23 @@ class User
      * @param array $data
      */
     public function hydrate($data) {
-        foreach ($data as $key => $value)
-        {
-            $method = "set" . ucfirst($key);
+        
+        $cityData = [];
+        foreach ($data as $key => $value):
 
-            if(method_exists($this, $method)):
-                $this->$method($value);
+            if(preg_match('/^city_([a-zA-Z]*)$/', $key)):
+                $key = str_replace('city_', '', $key);
+                $cityData[$key] = $value;
+            else:
+                $method = "set" . ucfirst($key);
+
+                if(method_exists($this, $method)):
+                    $this->$method($value);
+                endif;
             endif;
-        }
+
+        endforeach;
+        (!empty($cityData))&& $this->setCity($cityData);
     }
 
 // SETTERS
@@ -176,27 +180,14 @@ class User
     }
 
     /**
-     * Set the value of cityName
+     * Set the value of city
      *
-     * @param string
+     * @param array
      */ 
-    public function setCityName(string $name)
+    public function setCity(array $cityData)
     {
-        if (is_string($name)):
-            $this->cityName = $name;
-        endif;
-    }
-
-    /**
-     * Set the value of zipCode
-     *
-     * @param string
-     */ 
-    public function setZipCode($zipCode)
-    {
-        if (is_string($zipCode) && preg_match('/^[0-9]{5}$/', $zipCode)):
-            $this->zipCode = $zipCode;
-        endif;
+        $this->city = new City();
+        $this->city->hydrate($cityData);
     }
 
 // GETTERS
@@ -210,7 +201,6 @@ class User
     public function getEmail() { return $this->email; }
     public function getPhone() { return $this->phone; }
     public function getAddress() { return $this->address; }
-    public function getCityName() { return $this->cityName; }
-    public function getZipCode() { return $this->zipCode; }
+    public function getCity() { return $this->city; }
 
 }
