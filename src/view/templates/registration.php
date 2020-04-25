@@ -73,7 +73,7 @@ $this->scriptPath = '/public/js/formTraitment.js';
                 </p>
                 <p>
                     <label for="city">Ville</label>
-                    <select name="city" id="city"></select>
+                    <select name="city" id="city" required></select>
                 </p>
             </div>
         </fieldset>
