@@ -32,7 +32,7 @@ class UserController
     /**
      * Creates the session when a user tries to connect
      */
-    public function connect()
+    public function checkPassword()
     {
         if(!empty($_POST['username']) && !empty($_POST['password'])):
 
@@ -41,7 +41,6 @@ class UserController
             $user->hydrate($userModel->getUser($_POST['username']));
 
             if(password_verify($_POST['password'], $user->getPassword())):
-                session_start();
                 $_SESSION['username'] = $user->getUsername();
                 echo 'true';
             else:
