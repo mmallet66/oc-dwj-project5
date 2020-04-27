@@ -32,12 +32,12 @@ class UserModel extends Model
             $user->getUsername(),
             password_hash($user->getPassword(), PASSWORD_DEFAULT),
             $user->getGender(),
-            $user->getFirstname(),
-            $user->getName(),
-            $user->getEmail(),
+            strtolower($user->getFirstname()),
+            strtolower($user->getName()),
+            strtolower($user->getEmail()),
             $user->getPhone(),
-            $user->getAddress(),
-            $user->city->getId()
+            strtolower($user->getAddress()),
+            $user->getCity()->getId()
         ));
         
         return $affectedLine;

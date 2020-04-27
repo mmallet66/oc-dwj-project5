@@ -28,7 +28,7 @@ class CityModel extends Model
     {
         $req = $this->db->prepare('INSERT INTO cities(name, zip_code, region_code) VALUES(?, ?, ?)');
         return $req->execute([
-            $city->getName(),
+            strtolower($city->getName()),
             $city->getZipCode(),
             $city->getRegion()->getCode()
         ]);
