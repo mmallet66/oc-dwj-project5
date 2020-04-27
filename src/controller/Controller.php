@@ -7,6 +7,11 @@ namespace Occazou\Src\Controller;
  */
 class Controller
 {
+    public function __construct()
+    {
+        $this->getSession();
+    }
+
     /**
      * Generate a view
      * 
@@ -33,15 +38,12 @@ class Controller
 
     public function disconnectUser()
     {
-        $this->getSession();
         $userController = new UserController();
         $userController->disconnect();
     }
 
     public function newAnnounce()
     {
-        $this->getSession();
-
         $user = new \Occazou\Src\Model\User();
         $userModel = new \Occazou\Src\Model\UserModel();
         $user->hydrate($userModel->getUser($_SESSION['username']));
