@@ -4,6 +4,7 @@ namespace Occazou\Src\Model;
 
 class City
 {
+//PROPERTIES
     /**
      * @var int
      */
@@ -19,12 +20,9 @@ class City
     /**
      * @var string
      */
-    private $regionCode;
-    /**
-     * @var string
-     */
-    private $regionName;
+    private $region;
 
+// METHODS
     /**
      * Hydratation method
      * 
@@ -33,16 +31,25 @@ class City
      * @param array $data
      */
     public function hydrate($data) {
-        foreach ($data as $key => $value)
-        {
-            $method = "set" . ucfirst($key);
+        $regionData = [];
+        foreach ($data as $key => $value):
 
-            if(method_exists($this, $method)):
-                $this->$method($value);
+            if(preg_match('/^region_([a-zA-Z_]*)$/', $key)):
+                $key = str_replace('city_', '', $key);
+                $regionData[$key] = $value;
+            else:
+                $method = "set" . ucfirst($key);
+
+                if(method_exists($this, $method)):
+                    $this->$method($value);
+                endif;
             endif;
-        }
+
+        endforeach;
+        (!empty($regionData))&& $this->setRegion($regionData);
     }
 
+//SETTERS
     /**
      * Set the value of id
      *
@@ -80,29 +87,17 @@ class City
     }
 
     /**
-     * Set the value of regionCode
+     * Set the value of region
      *
-     * @return self
+     * @param array
      */ 
-    public function setRegionCode($regionCode)
+    public function setRegion(array $regionData)
     {
-        $this->regionCode = $regionCode;
-
-        return $this;
+        $this->region = new Region();
+        $this->region->hydrate($regionData);
     }
 
-    /**
-     * Set the value of regionName
-     *
-     * @return self
-     */ 
-    public function setRegionName($regionName)
-    {
-        $this->regionName = $regionName;
-
-        return $this;
-    }
-
+// GETTERS
     /**
      * Get the value of id
      */ 
@@ -128,18 +123,10 @@ class City
     }
 
     /**
-     * Get the value of regionCode
+     * Get the value of region
      */ 
-    public function getRegionCode()
+    public function getRegion()
     {
-        return $this->regionCode;
-    }
-
-    /**
-     * Get the value of regionName
-     */ 
-    public function getRegionName()
-    {
-        return $this->regionName;
+        return $this->region;
     }
 }

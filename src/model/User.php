@@ -78,7 +78,7 @@ class User
         $cityData = [];
         foreach ($data as $key => $value):
 
-            if(preg_match('/^city_([a-zA-Z]*)$/', $key)):
+            if(preg_match('/^city_([a-zA-Z_]*)$/', $key)):
                 $key = str_replace('city_', '', $key);
                 $cityData[$key] = $value;
             else:
