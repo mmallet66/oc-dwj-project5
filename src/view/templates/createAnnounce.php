@@ -2,10 +2,6 @@
 $this->title = 'Création Annonce';
 $this->scriptPath = '/public/js/addAnnounce.js';
 
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}
-
 if(!empty($_SESSION['username'])): ?>
 <article class="content">
     <h2>Créer une annonce</h2>
