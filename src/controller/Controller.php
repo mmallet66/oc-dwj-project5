@@ -33,7 +33,7 @@ class Controller
     public function connectUser()
     {
         $userController = new UserController();
-        $userController->connect();
+        $userController->checkPassword();
     }
 
     public function disconnectUser()
