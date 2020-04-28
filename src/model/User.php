@@ -97,7 +97,7 @@ class User
     /**
      * @param int Value assigned to $id property
      */
-    private function setId($id)
+    public function setId($id)
     {
         $this->id = (int) $id;
     }
