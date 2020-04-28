@@ -14,7 +14,7 @@ function ajaxPost(data, url, callback) {
 }
 
 function checkResponse(response) {
-    (response === 'true')? redirect() : passwordError();
+    (response == true)? redirect() : passwordError();
 }
 
 function redirect() {
