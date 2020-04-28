@@ -61,4 +61,11 @@ class UserController
             throw new \Exception('');
         endif;
     }
+
+    public function getUserAccount()
+    {
+        $this->user->hydrate($this->userModel->getUser($_SESSION['username']));
+        $view = new \Occazou\Src\View\View('userAccount');
+        $view->generate(['user'=>$this->user]);
+    }
 }

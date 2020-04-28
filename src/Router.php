@@ -4,7 +4,7 @@ namespace Occazou\Src;
 
 class Router
 {
-    private static $views = ['connection', 'connect-user', 'search', 'disconnect-user', 'registration', 'new-user', 'create-announce', 'new-announce'];
+    private static $views = ['connection', 'connect-user', 'search', 'disconnect-user', 'registration', 'new-user', 'create-announce', 'new-announce', 'user-account'];
 
     public static function routeRequest()
     {

@@ -19,7 +19,7 @@ $this->scriptPath = '/public/js/formTraitment.js';
                     <label for="password1">Mot de passe <strong id="message-password" hidden>Mots de passe différents</strong></label>
                     <input type="password" name="password1" class="input-password" id="password1" autocomplete="new-password" required>
                     <span data-title="Au moins 8 caractères dont 1 min, 1 MAJ et 1 chiffre"></span>
-                    <i class="fas fa-eye" id="show-password"></i>
+                    <i class="fas fa-eye icon-password" id="show-password"></i>
                 </p>
                 <p>
                     <label for="password2">Confirmation du mot de passe</label>

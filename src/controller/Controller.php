@@ -35,11 +35,17 @@ class Controller
         $userController = new UserController();
         $userController->checkPassword();
     }
-
+    
     public function disconnectUser()
     {
         $userController = new UserController();
         $userController->disconnect();
+    }
+
+    public function userAccount()
+    {
+        $userController = new UserController();
+        $userController->getUserAccount();
     }
 
     public function newAnnounce()

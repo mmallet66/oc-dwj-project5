@@ -107,7 +107,7 @@ header {
   font-size: 1.5em;
 }
 
-#connection #username {
+#connection #header-username {
   margin: 0;
 }
 
@@ -251,7 +251,7 @@ header {
   transition: 0.3s;
 }
 
-#content-container i#show-password {
+#content-container i.icon-password {
   color: #cad1d9;
   cursor: pointer;
   display: block;
@@ -261,7 +261,7 @@ header {
   width: 1rem;
 }
 
-#content-container i#show-password:hover {
+#content-container i.icon-password:hover {
   color: #000000;
 }
 
@@ -292,6 +292,10 @@ header {
   display: inline-block;
   border: 8px solid transparent;	
   border-bottom: 8px solid #ffce6b;
+}
+
+#content-container input:disabled {
+  cursor: not-allowed;
 }
 
 /* 

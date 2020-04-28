@@ -18,7 +18,7 @@
                     <label for="connection-check" id="connection">
                         <div>
                             <i id="user-icon" class="far fa-user"></i>
-                            <p id="username"><?= htmlspecialchars($_SESSION['username']) ?></p>
+                            <p id="header-username"><?= htmlspecialchars($_SESSION['username']) ?></p>
                         </div>
                     </label>
     
@@ -26,7 +26,7 @@
     
                     <div id="user-menu">
                         <ul class="user-menu-list">
-                            <li class="user-menu-list-item"><a href="myAccount.html">Mon compte</a></li>
+                            <li class="user-menu-list-item"><a href="/user-account">Mon compte</a></li>
                             <li class="user-menu-list-item"><a href="myAnnounces.html">Mes annonces</a></li>
                             <li class="user-menu-list-item"><a href="/create-announce">Déposer une annonce</a></li>
                             <li class="user-menu-list-item"><a href="/disconnect-user">Me déconnecter</a></li>
