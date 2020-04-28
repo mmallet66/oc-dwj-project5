@@ -293,24 +293,20 @@ listenShowPassword();
 listenEventsOnInputElts();
 listenSubmitEvent(formElt);
 
-switch(pageName) {
-  case 'userAccount': 
-    defineDivPasswordContent();
-    iconCheckPassword = document.getElementById('check-password');
+if(pageName == 'userAccount') {
+  defineDivPasswordContent();
+  iconCheckPassword = document.getElementById('check-password');
 
-    iconCheckPassword.addEventListener('click', function() {
-      let dataEntered = 'username='+document.getElementById('username').value+'&password=' + document.getElementById('password').value;
-      ajaxPost(dataEntered, 'http://occazou/connect-user', (response)=>{
-        if(response == true) {
-          const formPassword  = document.getElementById('update-password');
-          formPassword.action = "/update-password";
-          passwordChanged     = true;
-          defineDivPasswordContent(true);
-          listenSubmitEvent(formPassword);
-        }
-      })
+  iconCheckPassword.addEventListener('click', function() {
+    let dataEntered = 'username='+document.getElementById('username').value+'&password=' + document.getElementById('password').value;
+    ajaxPost(dataEntered, 'http://occazou/connect-user', (response)=>{
+      if(response == true) {
+        const formPassword  = document.getElementById('update-password');
+        formPassword.action = "/update-password";
+        passwordChanged     = true;
+        defineDivPasswordContent(true);
+        listenSubmitEvent(formPassword);
+      }
     })
-    break;
-  default: 
-  break;
+  })
 }
