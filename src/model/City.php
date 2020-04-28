@@ -20,7 +20,7 @@ class City
     /**
      * @var string
      */
-    private $region;
+    public $region;
 
 // METHODS
     /**
