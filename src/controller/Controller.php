@@ -42,6 +42,18 @@ class Controller
         $userController->disconnect();
     }
 
+    public function updateUser()
+    {
+        $userController = new UserController();
+        $userController->updateUser();
+    }
+
+    public function updatePassword()
+    {
+        $userController = new UserController();
+        $userController->updatePassword();
+    }
+
     public function userAccount()
     {
         $userController = new UserController();

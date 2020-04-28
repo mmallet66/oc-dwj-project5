@@ -125,7 +125,7 @@ function getDataEntered(formElement) {
   let data              = {};
   let inputElementsList = formElement.querySelectorAll('input');
   let selectElementList = formElement.querySelectorAll('select');
-
+  (passwordChanged)&& (data['passwordChanged']=passwordChanged);
   inputElementsList.forEach((inputElt) => {
     if(inputElt.type!='submit' && inputElt.name!='password2') {
       switch(inputElt.name) {
@@ -144,10 +144,10 @@ function getDataEntered(formElement) {
   
   selectElementList.forEach((selectElt) => {
     switch(selectElt.name) {
-      case 'city':
-        let value = selectElt.value.split('/');
-        data['city_name'] = value[0];
-        data['city_regionCode'] = value[1];
+      case 'city': 
+        let  value               = selectElt.value.split('/');
+        data['city_name']        = value[0];
+        data['city_region_code'] = value[1];
         break;
       default: 
         data[selectElt.name] = selectElt.value;
@@ -158,21 +158,122 @@ function getDataEntered(formElement) {
   return data;
 }
 
-function checkNecessaryData() {
+function defineNecessaryData() {
   const necessaryData = [];
-  necessaryData.push(document.getElementById('username').value)
-  necessaryData.push(document.getElementById('password1').value)
-  necessaryData.push(document.getElementById('password2').value)
-  necessaryData.push(document.getElementById('email').value)
-  necessaryData.push(document.getElementById('city').value)
+  necessaryData.push(getValueOf('username'))
+  necessaryData.push(getValueOf('email'))
+  necessaryData.push(getValueOf('city'))
+  if(pageName!='userAccount' || passwordChanged) {
+    necessaryData.push(getValueOf('password1'))
+    necessaryData.push(getValueOf('password2'))
+  }
+  return necessaryData;
+}
 
+function checkNecessaryData(necessaryData) {
   let isCheck = 0;
 
   necessaryData.forEach((element)=>{
     (element != '') && isCheck++
   })
+  return (necessaryData.length == isCheck)? true: false;
+}
 
-  return isCheck;
+function defineDivPasswordContent(passwordChecked=false) {
+  const contentUnchecked = '<p><label for="password">Entrez votre mot de passe pour le modifier</label><input type="password" name="password" class="input-password" id="password" autocomplete="off"><i class="fas fa-check icon-password" id="check-password"></i></p>';
+  const contentChecked   = '<p><label for="password1">Mot de passe <strong id="message-password" hidden>Mots de passe différents</strong></label><input type="password" name="password1" class="input-password" id="password1" autocomplete="new-password" required><span data-title="Au moins 8 caractères dont 1 min, 1 MAJ et 1 chiffre"></span><i class="fas fa-eye icon-password" id="show-password"></i></p><p><label for="password2">Confirmation du mot de passe</label><input type="password" name="password2" class="input-password" id="password2" autocomplete="new-password" required></p>';
+
+  divPasswordContainer.innerHTML = (passwordChecked)? contentChecked : contentUnchecked;
+  listenShowPassword();
+  listenEventsOnInputElts();
+}
+
+function getValueOf(elementId) {
+  let element = document.getElementById(elementId)
+  return (document.body.contains(element))&& (element.value!='') && element.value;
+}
+
+function listenShowPassword() {
+  const showPasswordElt = document.getElementById("show-password");
+  if(showPasswordElt){
+    showPasswordElt.addEventListener("click", function() {
+      const inputPasswordElts = document.querySelectorAll(".input-password");
+    
+      if (this.classList.contains("fa-eye")) {
+        inputPasswordElts.forEach(inputElt => {
+          inputElt.setAttribute("type", "text");
+        })
+        this.classList.replace("fa-eye", "fa-eye-slash");
+      }
+      else if (this.classList.contains("fa-eye-slash")) {
+        inputPasswordElts.forEach(inputElt => {
+          inputElt.setAttribute("type", "password");
+        })
+        this.classList.replace("fa-eye-slash", "fa-eye");
+      }
+    })
+  }
+}
+
+function listenEventsOnInputElts() {
+  const inputElts = document.querySelectorAll("input");
+  inputElts.forEach(input => {
+    input.addEventListener("change", function() {
+      checkInputElt(this);
+  
+      switch(this.id) {
+        case "zip-code": 
+          getCityData(this.value);
+          break;
+        case "password2": 
+          checkSamePasswords("password1", "password2");
+          break;
+        case "password1": 
+          checkSamePasswords("password1", "password2");
+          break;
+      }
+    })
+  })
+}
+
+function listenSubmitEvent(formElt) {
+  formElt.addEventListener('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const necessaryData = defineNecessaryData();
+    if(checkNecessaryData(necessaryData)){
+      const dataEntered = getDataEntered(this);
+      ajaxPost(encode(dataEntered),this.action,(response)=>{
+        make(this, response);
+      })
+
+    }
+    else {
+      alert('Veuillez remplir tous les champs nécessaires !');
+    }
+  })
+}
+
+function make(formElt, data) {
+  let domainRegexp = /^http([s]?):\/\/(.+)\//;
+  let action = formElt.action.replace(domainRegexp,'');
+  if(data == true) {
+    switch(action) {
+      case "new-user":
+        document.location.href = '/connection';
+        break;
+      case "update-password":
+        alert('Mot de passe changé avec succès');
+        passwordChanged = false;
+        defineDivPasswordContent();
+        break;
+      case "update-user":
+        alert('Compte utilisateur mis à jour');
+        break;
+    }
+  } else {
+    alert(data);
+  }
 }
 
 /* 
@@ -181,64 +282,35 @@ function checkNecessaryData() {
 ##############################
 */
 
-const inputElts         = document.querySelectorAll("input");
-const showPasswordElt   = document.getElementById("show-password");
-const cityListContainer = document.getElementById("city");
-const formElts          = document.querySelectorAll('form');
+const pageName             = document.getElementById('content-container').classList[0];
+const cityListContainer    = document.getElementById("city");
+const formElt              = document.querySelector('form');
+const divPasswordContainer = document.getElementById('password-container');
+let   iconCheckPassword    = null;
+let   passwordChanged      = false;
 
-inputElts.forEach(input => {
-  input.addEventListener("change", function() {
-    checkInputElt(this);
+listenShowPassword();
+listenEventsOnInputElts();
+listenSubmitEvent(formElt);
 
-    switch(this.id) {
-      case "zip-code": 
-        getCityData(this.value);
-        break;
-      case "password2": 
-        checkSamePasswords("password1", "password2");
-        break;
-      case "password1": 
-        checkSamePasswords("password1", "password2");
-        break;
-    }
-  })
-})
+switch(pageName) {
+  case 'userAccount': 
+    defineDivPasswordContent();
+    iconCheckPassword = document.getElementById('check-password');
 
-if(showPasswordElt){
-  showPasswordElt.addEventListener("click", function() {
-    const inputPasswordElts = document.querySelectorAll(".input-password");
-  
-    if (this.classList.contains("fa-eye")) {
-      inputPasswordElts.forEach(inputElt => {
-        inputElt.setAttribute("type", "text");
+    iconCheckPassword.addEventListener('click', function() {
+      let dataEntered = 'username='+document.getElementById('username').value+'&password=' + document.getElementById('password').value;
+      ajaxPost(dataEntered, 'http://occazou/connect-user', (response)=>{
+        if(response == true) {
+          const formPassword  = document.getElementById('update-password');
+          formPassword.action = "/update-password";
+          passwordChanged     = true;
+          defineDivPasswordContent(true);
+          listenSubmitEvent(formPassword);
+        }
       })
-      this.classList.replace("fa-eye", "fa-eye-slash");
-    }
-    else if (this.classList.contains("fa-eye-slash")) {
-      inputPasswordElts.forEach(inputElt => {
-        inputElt.setAttribute("type", "password");
-      })
-      this.classList.replace("fa-eye-slash", "fa-eye");
-    }
-  })
+    })
+    break;
+  default: 
+  break;
 }
-
-formElts.forEach((form) => {
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if(checkNecessaryData() == 5){
-
-      let dataEntered = getDataEntered(this);
-
-      ajaxPost(encode(dataEntered),this.action,(response)=>{
-        (response == 1)? document.location.href = '/connection' : alert(response);
-      })
-        
-    }
-    else {
-      alert('Veuillez remplir tous les champs nécessaires !');
-    }
-  })
-})

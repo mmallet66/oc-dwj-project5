@@ -48,7 +48,7 @@ if(!empty($_SESSION['username'])): ?>
                 </p>
                 <p>
                     <label for="phone">Téléphone</label>
-                    <input type="tel" name="phone" class="input-phone" id="phone" value="<?= $user->getPhone() ?>">
+                    <input type="tel" name="phone" class="input-phone" id="phone" value="0<?= $user->getPhone() ?>">
                     <span data-title="Veuillez saisir un numéro au format : 0102030405"></span>
                 </p>
             </div>
@@ -65,27 +65,26 @@ if(!empty($_SESSION['username'])): ?>
                 <p>
                     <label for="city">Ville</label>
                     <select name="city" id="city">
-                        <option value="<?= $user->city->getName().'/'.$user->city->region->getCode() ?>"><?= ucfirst($user->city->getName()) ?></option>
+                        <option value="<?= $user->city->getName().'/'.$user->city->region->getCode() ?>"><?= strtoupper($user->city->getName()) ?></option>
                     </select>
                 </p>
             </div>
         </fieldset>
+        <input class="submit" type="submit" value="Mettre à jour mes données personnelle">
+    </form>
+
+    <form method="post" id="update-password">
         <fieldset>
-            <legend>Nom d'utilisateur</legend>
-            <p>
-                <label for="username">Nom d'utilisateur</label>
-            </p>
-                <input type="text" name="username" id="username" value="<?= $user->getUsername() ?>" disabled required>
-        </fieldset>
-        <fieldset>
+            <input type="text" name="username" class="hidden" value="<?= $user->getUsername() ?>" disabled required>
             <legend>Mot de passe</legend>
             <div id="password-container"></div>
         </fieldset>
-        <input class="submit" type="submit" value="Enregistrer">
+        <input class="submit" type="submit" value="Remplacer mon mot de passe">
     </form>
+
 </article>
 <?php
 else:
-    throw new Exception('Vous devez être connecté pour déposer une annonce');
+    throw new Exception('Veuillez vous connecter');
 endif;
 ?>

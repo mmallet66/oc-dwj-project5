@@ -75,9 +75,18 @@ class UserModel extends Model
      */
     public function updateUser(object $user)
     {
-        $req = $this->db->prepare('UPDATE users SET username=:username, gender=:gender, firstname=:firstname, name=:name, email=:email, phone=:phone, address=:address, city_code=:cityCode WHERE user_id=:id');
+        $req = $this->db->prepare('UPDATE users SET gender=:gender, firstname=:firstname, name=:name, email=:email, phone=:phone, address=:address, city_id=:cityId WHERE user_id=:id');
 
-        return $req->execute(array(':username'=>$user->getUsername(), ':gender'=>$user->getGender(), ':firstname'=>$user->getFirstname(), ':name'=>$user->getName(), ':email'=>$user->getEmail(), ':phone'=>$user->getPhone(), ':address'=>$user->getAddress(), ':cityCode'=>$user->getCityCode(), ':id'=>$user->getId()));
+        return $req->execute(array(
+            ':gender'=>$user->getGender(),
+            ':firstname'=>strtolower($user->getFirstname()),
+            ':name'=>strtolower($user->getName()),
+            ':email'=>strtolower($user->getEmail()),
+            ':phone'=>$user->getPhone(),
+            ':address'=>strtolower($user->getAddress()),
+            ':cityId'=>$user->getCity()->getId(),
+            ':id'=>$user->getId()
+        ));
     }
 
     /**
