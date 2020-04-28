@@ -64,7 +64,7 @@ class UserController
 
     public function getUserAccount()
     {
-        $this->user->hydrate($this->userModel->getUser($_SESSION['username']));
+        (!empty($_SESSION['username']))&& $this->user->hydrate($this->userModel->getUser($_SESSION['username']));
         $view = new \Occazou\Src\View\View('userAccount');
         $view->generate(['user'=>$this->user]);
     }
