@@ -7,22 +7,26 @@ namespace Occazou\Src\Controller;
  */
 class UserController
 {
+    public $userModel;
+    public $user;
 
+    public function __construct()
+    {
+        $this->userModel = new \Occazou\Src\Model\UserModel();
+        $this->user = new \Occazou\Src\Model\User();
+    }
 
     public function new()
     {
         if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['city_name'])):
-            $user = new \Occazou\Src\Model\User();
-            $user->hydrate($_POST);
+            $this->user->hydrate($_POST);
 
-            $userModel = new \Occazou\Src\Model\UserModel();
-            if($userModel->isNotFree($user->getUsername())):
+            if($this->userModel->isNotFree($this->user->getUsername())):
                 echo 'Le nom d\'utilisateur est déjà pris.';
             else:
                 $cityModel = new \Occazou\Src\Model\CityModel();
-                $user->city->setId($cityModel->getCityId($user->city));
-                $userModel->addUser($user);
-                echo 1;
+                $this->user->city->setId($cityModel->getCityId($this->user->city));
+                echo ($this->userModel->addUser($this->user))? 1 : 'Une erreur s\'est produite, veuillez réessayer';
             endif;
         else:
             echo 'Veuillez remplir tous les champs nécessaires.';
@@ -36,15 +40,13 @@ class UserController
     {
         if(!empty($_POST['username']) && !empty($_POST['password'])):
 
-            $userModel = new \Occazou\Src\Model\UserModel();
-            $user = new \Occazou\Src\Model\User();
-            $user->hydrate($userModel->getUser($_POST['username']));
+            $this->user->hydrate($this->userModel->getUser($_POST['username']));
 
-            if(password_verify($_POST['password'], $user->getPassword())):
-                $_SESSION['username'] = $user->getUsername();
-                echo 'true';
+            if(password_verify($_POST['password'], $this->user->getPassword())):
+                $_SESSION['username'] = $this->user->getUsername();
+                echo 1;
             else:
-                echo 'false';
+                echo 0;
             endif;
 
         endif;
