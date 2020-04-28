@@ -10,6 +10,7 @@ if(!empty($_SESSION['username'])): ?>
     <form action="/update-user" method="post">
         <fieldset>
             <legend>Données personnelles</legend>
+            <input type="text" name="username" id="username" class="hidden" value="<?= $user->getUsername() ?>" disabled required>
             <p>
                 <label for="gender">Civilité</label>
                 <select name="gender" id="gender">
@@ -75,7 +76,6 @@ if(!empty($_SESSION['username'])): ?>
 
     <form method="post" id="update-password">
         <fieldset>
-            <input type="text" name="username" class="hidden" value="<?= $user->getUsername() ?>" disabled required>
             <legend>Mot de passe</legend>
             <div id="password-container"></div>
         </fieldset>
