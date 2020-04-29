@@ -8,3 +8,4 @@ const USER = 'mathieu';
 const PASSWD = 'passe';
 
 const UPLOADS_DIR = 'public/img/uploads/';
+const IMG_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif'];

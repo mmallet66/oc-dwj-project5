@@ -1,6 +1,6 @@
 <?php
 $this->title = 'Création Annonce';
-$this->scriptPath = '/public/js/addAnnounce.js';
+$this->scriptPath = '/public/js/formTraitment.js';
 
 if(!empty($_SESSION['username'])): ?>
 <article class="content">
@@ -19,8 +19,8 @@ if(!empty($_SESSION['username'])): ?>
         </fieldset>
 
         <fieldset>
-            <legend>Prix</legend>
-            <input type="text" name="price" class="input-price" id="price" required>
+            <legend>Prix en €</legend>
+            <input type="text" name="price" class="input-price" id="price" placeholder="Un entier supèrieur à 0" required>
         </fieldset>
 
         <fieldset>

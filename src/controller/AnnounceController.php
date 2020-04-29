@@ -11,30 +11,40 @@ class AnnounceController
 {
     private $announceModel;
     private $announce;
+    private $userModel;
+    private $user;
 
     public function __construct()
     {
         $this->announceModel = new \Occazou\Src\Model\AnnounceModel();
         $this->announce = new \Occazou\Src\Model\Announce();
+        $this->userModel = new \Occazou\Src\Model\UserModel();
+        $this->user = new \Occazou\Src\Model\User();
     }
 
-    public function new($userData)
+    public function new()
     {
-        if(!empty($_POST['title']) && !empty($_POST['text']) && !empty($_POST['price'])):
-            if(isset($_FILES['picture']) && $_FILES['picture']['error'] == 0):
-                // enregistre 
-                $this->savePicture($_FILES['picture']);
-            endif;
+        if(!empty($_SESSION['username'])&&!empty($_SESSION['id'])):
+            $this->user->hydrate($this->userModel->getUser($_SESSION['username']));
+            if(!empty($_POST['title']) && !empty($_POST['text']) && !empty($_POST['price'])):
+                if(isset($_FILES['picture']) && $_FILES['picture']['error'] == 0):
+                    if(!$this->savePicture($_FILES['picture'])):
+                        throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
+                    endif;
+                    $this->announce->hydrate($_POST);
+                    $this->announce->hydrate(['author_id'=>$this->user->getId()]);
 
-            // enregistres l'annonce dans la db
-            $this->announce->hydrate($_POST);
-            $this->announce->hydrate($userData);
-
-            if($this->announceModel->addAnnounce($this->announce)):
-                header('Location:/');
+                    if(!$this->announceModel->addAnnounce($this->announce)):
+                        unlink(UPLOADS_DIR.$this->announce->getPictureName());
+                        throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
+                    endif;
+                    header('Location:/user-announces');
+                endif;
             else:
-                throw new Exception('Une erreur s\'est produite');
+                throw new Exception('Veuillez remplir tous les champs nécessaires.');
             endif;
+        else:
+            throw new Exception('Veuillez vous connecter.');
         endif;
     }
 
@@ -43,7 +53,7 @@ class AnnounceController
         $fileName = $this->setPictureFileName($picture);
         if($fileName):
             $this->announce->setPictureName($fileName);
-            $this->announceModel->savePicture($picture['tmp_name'], $fileName);
+            return move_uploaded_file($picture['tmp_name'], UPLOADS_DIR.$fileName);
         else:
             throw new \Exception('Veuillez saisir une image au format JPG ou JPEG ou GIF ou PNG');
         endif;
@@ -51,15 +61,13 @@ class AnnounceController
 
     public function setPictureFileName(array $picture)
     {
-        $extensions = ['jpg', 'jpeg', 'gif', 'png'];
         $picture = [
             'name' => pathinfo($picture['name'])['filename'],
             'tempName' => pathinfo($picture['tmp_name'])['filename'],
             'extension' => pathinfo($picture['name'])['extension']
         ];
 
-        $fileName = (in_array($picture['extension'], $extensions))? md5($picture['tempName'].$picture['name']).'.'.$picture['extension'] : false;
-
+        $fileName = (in_array($picture['extension'], IMG_EXTENSIONS))? $_SESSION['id'].md5($picture['tempName'].$picture['name']).'.'.$picture['extension'] : false;
 
         return $fileName;
     }

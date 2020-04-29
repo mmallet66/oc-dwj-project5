@@ -18,12 +18,7 @@ class Announce
     /**
      * @var int
      */
-    private $authorId;
-
-    /**
-     * @var string
-     */
-    private $authorUsername;
+    private $author;
 
     /**
      * @var string
@@ -43,11 +38,6 @@ class Announce
     /**
      * @var string
      */
-    private $city;
-
-    /**
-     * @var string
-     */
     private $pictureName;
 
     /**
@@ -63,16 +53,24 @@ class Announce
      * 
      * @param array $data
      */
-    public function hydrate($data) {
-        foreach ($data as $key => $value)
-        {
-            $method = "set" . ucfirst($key);
+    public function hydrate($data)
+    {
+        $authorData = [];
+        foreach ($data as $key => $value):
 
-            if(method_exists($this, $method))
-            {
-                $this->$method($value);
-            }
-        }
+            if(preg_match('/^author_([a-zA-Z_]*)$/', $key)):
+                $key = str_replace('author_', '', $key);
+                $authorData[$key] = $value;
+            else:
+                $method = "set" . ucfirst($key);
+
+                if(method_exists($this, $method)):
+                    $this->$method($value);
+                endif;
+            endif;
+
+        endforeach;
+        (!empty($authorData))&& $this->setAuthor($authorData);
     }
 
 // SETTERS
@@ -87,23 +85,16 @@ class Announce
     }
 
     /**
-     * Set the value of authoId
+     * Set the value of author
      *
-     * @param int $authorId
+     * @param int $author
      */ 
-    private function setAuthorId($authorId)
+    private function setAuthor($authorData)
     {
-        $this->authorId = (int) $authorId;
-    }
-
-    /**
-     * Set the value of authorUsername
-     *
-     * @param string $authorUsername
-     */ 
-    private function setAuthorUsername($authorUsername)
-    {
-        $this->authorUsername = (is_string($authorUsername))? $authorUsername : null;
+        if(is_array($authorData)):
+            $this->author = new User;
+            $this->author->hydrate($authorData);
+        endif;
     }
 
     /**
@@ -137,16 +128,6 @@ class Announce
     }
 
     /**
-     * Set the value of city
-     *
-     * @param string $city
-     */ 
-    public function setCity($city)
-    {
-        $this->city = (is_string($city))? $city : null;
-    }
-
-    /**
      * Set the value of pictureName
      *
      * @param string $pictureName
@@ -168,12 +149,10 @@ class Announce
 
 // GETTERS
     public function getId(){return $this->id;}
-    public function getAuthorId(){return $this->authorId;}
-    public function getAuthorUsername(){return $this->authorUsername;}
+    public function getAuthor(){return $this->author;}
     public function getTitle(){return $this->title;}
     public function getText(){return $this->text;}
     public function getPrice(){return $this->price;}
-    public function getCity(){return $this->city;}
     public function getPictureName(){return $this->pictureName;}
     public function getCreationDate(){return $this->creationDate;}
 }

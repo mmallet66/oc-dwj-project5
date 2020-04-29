@@ -61,35 +61,48 @@ function createCityItem(cityData) {
 }
 
 function checkInputElt(inputElt) {
-  let check;
-
+  let checked = true;
   inputElt.classList.forEach(className => {
-    const regExp = defineRegExp(className);
-          check  = (regExp.test(inputElt.value))|| false;
+    const regExp  = defineRegExp(className);
+    if(regExp!=null) {
+      if(inputElt.value!="" && !regExp.test(inputElt.value)) {
+        checked = false;
+        inputElt.classList.add('bad-data');
+      }
+      else {
+        inputElt.classList.remove('bad-data');
+      }
+    }
   })
-
-  editInputElt(inputElt, check);
+  return checked;
 }
 
 function defineRegExp(type) {
+  let regExp = null;
   switch(type) {
     case "input-password": 
       regExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
       break;
-      case "input-mail": 
-        regExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-        break;
+    case "input-mail": 
+      regExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+      break;
     case "input-phone": 
       regExp = /^[0-9]{10}$/;
       break;
     case "input-zip-code": 
       regExp = /^[0-9]{5}$/;
       break;
+    case "input-price": 
+      regExp = /^[1-9]{1}[0-9]*$/;
+      break;
+    case "input-picture": 
+      regExp = /\.(jpg|jpeg|png|gif)$/;
+      break;
   }
   return regExp;
 }
 
-function editInputElt(inputElt, checked=true) {
+function editInputElt(inputElt, checked) {
   inputElt.style.borderColor = "#cad1d9";
   inputElt.style.borderWidth = "1px";
 
@@ -122,9 +135,10 @@ function encode(data) {
 }
 
 function getDataEntered(formElement) {
-  let data              = {};
+  let data = {};
   let inputElementsList = formElement.querySelectorAll('input');
-  let selectElementList = formElement.querySelectorAll('select');
+  let textareaElementsList = (document.querySelectorAll('textarea'));
+  let selectElementsList = formElement.querySelectorAll('select');
   (passwordChanged)&& (data['passwordChanged']=passwordChanged);
   inputElementsList.forEach((inputElt) => {
     if(inputElt.type!='submit' && inputElt.name!='password2') {
@@ -142,7 +156,7 @@ function getDataEntered(formElement) {
     }
   })
   
-  selectElementList.forEach((selectElt) => {
+  selectElementsList.forEach((selectElt) => {
     switch(selectElt.name) {
       case 'city': 
         let  value               = selectElt.value.split('/');
@@ -155,17 +169,27 @@ function getDataEntered(formElement) {
     }
   })
 
+  textareaElementsList.forEach((element) => {
+    data[element.name] = element.value;
+  })
+
   return data;
 }
 
 function defineNecessaryData() {
   const necessaryData = [];
-  necessaryData.push(getValueOf('username'))
-  necessaryData.push(getValueOf('email'))
-  necessaryData.push(getValueOf('city'))
-  if(pageName!='userAccount' || passwordChanged) {
-    necessaryData.push(getValueOf('password1'))
-    necessaryData.push(getValueOf('password2'))
+  if(pageName=='create-announce') {
+    necessaryData.push(getValueOf('title'))
+    necessaryData.push(getValueOf('text'))
+    necessaryData.push(getValueOf('price'))
+  }else {
+    necessaryData.push(getValueOf('username'))
+    necessaryData.push(getValueOf('email'))
+    necessaryData.push(getValueOf('city'))
+    if(pageName!='userAccount' || passwordChanged) {
+      necessaryData.push(getValueOf('password1'))
+      necessaryData.push(getValueOf('password2'))
+    }
   }
   return necessaryData;
 }
@@ -174,7 +198,7 @@ function checkNecessaryData(necessaryData) {
   let isCheck = 0;
 
   necessaryData.forEach((element)=>{
-    (element != '') && isCheck++
+    (element) && isCheck++
   })
   return (necessaryData.length == isCheck)? true: false;
 }
@@ -185,12 +209,12 @@ function defineDivPasswordContent(passwordChecked=false) {
 
   divPasswordContainer.innerHTML = (passwordChecked)? contentChecked : contentUnchecked;
   listenShowPassword();
-  listenEventsOnInputElts();
+  listenChangeEventOnInputElts();
 }
 
 function getValueOf(elementId) {
   let element = document.getElementById(elementId)
-  return (document.body.contains(element))&& (element.value!='') && element.value;
+  return ((document.body.contains(element))&& (element.value!='') && checkInputElt(element))? element.value : false;
 }
 
 function listenShowPassword() {
@@ -215,12 +239,11 @@ function listenShowPassword() {
   }
 }
 
-function listenEventsOnInputElts() {
+function listenChangeEventOnInputElts() {
   const inputElts = document.querySelectorAll("input");
   inputElts.forEach(input => {
     input.addEventListener("change", function() {
-      checkInputElt(this);
-  
+      editInputElt(this, checkInputElt(this));
       switch(this.id) {
         case "zip-code": 
           getCityData(this.value);
@@ -238,36 +261,43 @@ function listenEventsOnInputElts() {
 
 function listenSubmitEvent(formElt) {
   formElt.addEventListener('submit', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
     const necessaryData = defineNecessaryData();
     if(checkNecessaryData(necessaryData)){
-      const dataEntered = getDataEntered(this);
-      ajaxPost(encode(dataEntered),this.action,(response)=>{
-        make(this, response);
-      })
-
+      let badDataElts = document.getElementsByClassName('bad-data');
+      if(badDataElts.length==0) {
+        const dataEntered = getDataEntered(this);
+        if(pageName!="create-announce") {
+          ajaxPost(encode(dataEntered),this.action,(response)=>{
+            make(this, response);
+          })
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
+      else {
+        alert('Au moins un champs est mal rempli');
+      }
     }
     else {
-      alert('Veuillez remplir tous les champs nécessaires !');
+      alert('Veuillez remplir tous les champs nécessaires correctement !');
     }
   })
 }
 
 function make(formElt, data) {
   let domainRegexp = /^http([s]?):\/\/(.+)\//;
-  let action = formElt.action.replace(domainRegexp,'');
+  let action       = formElt.action.replace(domainRegexp,'');
   if(data == true) {
     switch(action) {
-      case "new-user":
+      case "new-user": 
         document.location.href = '/connection';
         break;
-      case "update-password":
+      case "update-password": 
         alert('Mot de passe changé avec succès');
         passwordChanged = false;
         defineDivPasswordContent();
         break;
-      case "update-user":
+      case "update-user": 
         alert('Compte utilisateur mis à jour');
         break;
     }
@@ -290,7 +320,7 @@ let   iconCheckPassword    = null;
 let   passwordChanged      = false;
 
 listenShowPassword();
-listenEventsOnInputElts();
+listenChangeEventOnInputElts();
 listenSubmitEvent(formElt);
 
 if(pageName == 'userAccount') {
@@ -301,9 +331,9 @@ if(pageName == 'userAccount') {
     let dataEntered = 'username='+document.getElementById('username').value+'&password=' + document.getElementById('password').value;
     ajaxPost(dataEntered, 'http://occazou/connect-user', (response)=>{
       if(response == true) {
-        const formPassword  = document.getElementById('update-password');
-        formPassword.action = "/update-password";
-        passwordChanged     = true;
+        const formPassword        = document.getElementById('update-password');
+              formPassword.action = "/update-password";
+              passwordChanged     = true;
         defineDivPasswordContent(true);
         listenSubmitEvent(formPassword);
       }
