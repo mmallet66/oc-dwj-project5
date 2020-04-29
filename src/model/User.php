@@ -164,8 +164,9 @@ class User
     /**
      * @param int Value assigned to $phone property
      */
-    public function setPhone(int $phone)
+    public function setPhone($phone)
     {
+        $phone = (int) $phone;
         $regExp = '/^[0-9]{9}$/';
 
         $this->phone = preg_match($regExp, $phone)? $phone : null;
@@ -184,10 +185,12 @@ class User
      *
      * @param array
      */ 
-    public function setCity(array $cityData)
+    public function setCity($cityData)
     {
-        $this->city = new City();
-        $this->city->hydrate($cityData);
+        if(is_array($cityData)):
+            $this->city = new City();
+            $this->city->hydrate($cityData);
+        endif;
     }
 
 // GETTERS
