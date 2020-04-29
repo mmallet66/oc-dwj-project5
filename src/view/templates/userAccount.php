@@ -49,7 +49,7 @@ if(!empty($_SESSION['username'])): ?>
                 </p>
                 <p>
                     <label for="phone">Téléphone</label>
-                    <input type="tel" name="phone" class="input-phone" id="phone" value="0<?= $user->getPhone() ?>">
+                    <input type="tel" name="phone" class="input-phone" id="phone" value="<?= ($user->getPhone()!=null)?'0'.$user->getPhone():'' ?>">
                     <span data-title="Veuillez saisir un numéro au format : 0102030405"></span>
                 </p>
             </div>
