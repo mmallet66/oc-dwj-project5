@@ -73,8 +73,8 @@ class User
      * 
      * @param array $data
      */
-    public function hydrate($data) {
-        
+    public function hydrate($data)
+    {
         $cityData = [];
         foreach ($data as $key => $value):
 
