@@ -31,15 +31,15 @@ class AnnounceController
                     if(!$this->savePicture($_FILES['picture'])):
                         throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
                     endif;
-                    $this->announce->hydrate($_POST);
-                    $this->announce->hydrate(['author_id'=>$this->user->getId()]);
-
-                    if(!$this->announceModel->addAnnounce($this->announce)):
-                        unlink(UPLOADS_DIR.$this->announce->getPictureName());
-                        throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
-                    endif;
-                    header('Location:/user-announces');
                 endif;
+                $this->announce->hydrate($_POST);
+                $this->announce->hydrate(['author_id'=>$this->user->getId()]);
+
+                if(!$this->announceModel->addAnnounce($this->announce)):
+                    unlink(UPLOADS_DIR.$this->announce->getPictureName());
+                    throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
+                endif;
+                header('Location:/user-announces');
             else:
                 throw new Exception('Veuillez remplir tous les champs nécessaires.');
             endif;
