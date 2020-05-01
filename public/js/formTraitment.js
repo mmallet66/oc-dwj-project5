@@ -306,6 +306,37 @@ function make(formElt, data) {
   }
 }
 
+function ifUserAccountPage() {
+  if(pageName == 'userAccount') {
+    defineDivPasswordContent();
+    iconCheckPassword = document.getElementById('check-password');
+  
+    iconCheckPassword.addEventListener('click', function() {
+      let dataEntered = 'username='+document.getElementById('username').value+'&password=' + document.getElementById('password').value;
+      ajaxPost(dataEntered, 'http://occazou/connect-user', (response)=>{
+        if(response == true) {
+          const formPassword        = document.getElementById('update-password');
+                formPassword.action = "/update-password";
+                passwordChanged     = true;
+          defineDivPasswordContent(true);
+          listenSubmitEvent(formPassword);
+        }
+      })
+    })
+  }
+}
+
+function listenDeletionOfAnnouncement() {
+  const buttons = document.querySelectorAll('#content-container.userAnnounces button');
+  buttons.forEach(button => {
+    button.addEventListener('click', function() {
+      if(confirm("Êtes vous sûre de vouloir supprimer cette annonce ?")) {
+        document.location.href = '/delete-announce/'+this.value;
+      }
+    });
+  })
+}
+
 /* 
 ##############################
 ###          MAIN          ###
@@ -319,24 +350,12 @@ const divPasswordContainer = document.getElementById('password-container');
 let   iconCheckPassword    = null;
 let   passwordChanged      = false;
 
-listenShowPassword();
-listenChangeEventOnInputElts();
-listenSubmitEvent(formElt);
-
-if(pageName == 'userAccount') {
-  defineDivPasswordContent();
-  iconCheckPassword = document.getElementById('check-password');
-
-  iconCheckPassword.addEventListener('click', function() {
-    let dataEntered = 'username='+document.getElementById('username').value+'&password=' + document.getElementById('password').value;
-    ajaxPost(dataEntered, 'http://occazou/connect-user', (response)=>{
-      if(response == true) {
-        const formPassword        = document.getElementById('update-password');
-              formPassword.action = "/update-password";
-              passwordChanged     = true;
-        defineDivPasswordContent(true);
-        listenSubmitEvent(formPassword);
-      }
-    })
-  })
+if(pageName=='userAnnounces') {
+  listenDeletionOfAnnouncement();
+}
+else {
+  listenShowPassword();
+  listenChangeEventOnInputElts();
+  listenSubmitEvent(formElt);
+  ifUserAccountPage();
 }
