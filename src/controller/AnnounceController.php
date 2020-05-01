@@ -83,4 +83,19 @@ class AnnounceController
             
         endif;
     }
+
+    public function deleteAnnounce()
+    {
+        if(!empty($_GET['req']) && intval($_GET['req'])):
+            $this->announce->hydrate($this->announceModel->getAnnounce($_GET['req']));
+            if(!empty($_SESSION['id']) && $_SESSION['id']==$this->announce->getAuthor()->getId()):
+                $this->announceModel->deleteAnnounce($_GET['req']);
+                header('Location:/user-announces');
+            else:
+                throw new Exception("Vous n'êtes pas autorisé à effectuer cette requête.");
+            endif;
+        else:
+            throw new Exception("Il manque une donnée");
+        endif;
+    }
 }
