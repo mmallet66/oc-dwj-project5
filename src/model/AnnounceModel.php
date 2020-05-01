@@ -31,7 +31,7 @@ class AnnounceModel extends Model
         return $req->execute(array(
             ':authorId'=>$announce->getAuthor()->getId(),
             ':title'=>$announce->getTitle(),
-            ':text'=>$announce->getText(),
+            ':text'=>nl2br($announce->getText()),
             ':price'=>$announce->getPrice(),
             ':pictureName'=>$announce->getPictureName()
         ));

@@ -129,7 +129,7 @@ function encode(data) {
     urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
   }
 
-  urlEncodedData = urlEncodedDataPairs.join('&').replace(/%40/g, '@').replace(/%20/g, '_');
+  urlEncodedData = urlEncodedDataPairs.join('&').replace('%0D%0A', '\n\r').replace(/%40/g, '@').replace(/%20/g, '_');
 
   return(urlEncodedData);
 }

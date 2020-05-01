@@ -26,7 +26,13 @@ $this->title = 'Announce';
 
     <div id="description-container">
         <h4>Description :</h4>
-        <p id="description"><?= htmlspecialchars($announce->getText()) ?></p>
+        <p id="description">
+            <?php
+            $text = str_replace('<br />', '*returnLine*', $announce->getText());
+            $text = htmlspecialchars($text);
+            $text = str_replace('*returnLine*', '<br />', $text);
+            echo $text;
+            ?></p>
         <p id="announce-date"><?= $announce->getCreationDate() ?></p>
     </div>
 
