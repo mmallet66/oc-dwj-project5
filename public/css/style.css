@@ -415,24 +415,38 @@ header {
 
 /* ---- User Announces ---- */
 
-#content-container.my-announces table {
+#content-container.userAnnounces p {
+  text-align: center;
+}
+
+#content-container.userAnnounces a {
+  color: #ff6e6b;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#content-container.userAnnounces table {
   border-collapse: collapse;
   margin: 0 auto;
   width: 90%;
 }
 
-#content-container.my-announces table th {
+#content-container.userAnnounces table th {
   color: #ffce6b;
   text-align: left;
 }
 
-#content-container.my-announces table tr {
+#content-container.userAnnounces table tr {
   background-color: #4fb6bb60;
   border-bottom: 1px solid #fff;
   height: 35px;
 }
 
-#content-container.my-announces table thead, #content-container.my-announces table tr:hover {
+#content-container.userAnnounces table td:last-child {
+  text-align: center;
+}
+
+#content-container.userAnnounces table thead, #content-container.userAnnounces table tr:hover {
   background-color: #4fb6bb;
 }
 
