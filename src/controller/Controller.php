@@ -66,6 +66,12 @@ class Controller
         $announceController->new();
     }
 
+    public function userAnnounces()
+    {
+        $announceController = new AnnounceController();
+        $announceController->getUserAnnounces();
+    }
+
     public function getSession()
     {
         if (session_status() == PHP_SESSION_NONE) {
