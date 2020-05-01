@@ -71,4 +71,16 @@ class AnnounceController
 
         return $fileName;
     }
+
+    public function getUserAnnounces()
+    {
+        if(isset($_SESSION['id'])):
+            $announcesData = $this->announceModel->getUserAnnounces($_SESSION['id']);
+            $view = new \Occazou\Src\View\View('userAnnounces');
+            $view->generate($announcesData);
+        else:
+            throw new Exception("Veuillez vous connecter.");
+            
+        endif;
+    }
 }
