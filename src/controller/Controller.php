@@ -72,6 +72,12 @@ class Controller
         $announceController->getUserAnnounces();
     }
 
+    public function announce()
+    {
+        $announceController = new AnnounceController();
+        $announceController->getAnnounce();
+    }
+
     public function deleteAnnounce()
     {
         $announceController = new AnnounceController();
