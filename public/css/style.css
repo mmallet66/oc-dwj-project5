@@ -593,3 +593,43 @@ header {
   grid-column: 1/13;
   text-align: center;
 }
+
+/* ---- Announce ---- */
+
+#content-container.announce #img-container {
+  text-align: center;
+}
+
+#content-container.announce div, #content-container.announce hr {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+
+#content-container.announce div {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+#content-container.announce i.gender {
+  color: #ffce6b;
+  font-size: 3rem;
+}
+
+#content-container.announce #img-container img {
+  max-width: 100%;
+}
+
+#content-container.announce h4{
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+#content-container.announce #price {
+  color: #ff6e6b;
+  font-size: 1.5rem;
+}
+
+#content-container.announce #description {
+  text-align: justify;
+}
