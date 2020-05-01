@@ -3,6 +3,7 @@
 namespace Occazou\Src\Controller;
 
 use Exception;
+use Occazou\Src\Model\Announce;
 
 /**
  * Class Controller
@@ -81,6 +82,17 @@ class AnnounceController
         else:
             throw new Exception("Veuillez vous connecter.");
             
+        endif;
+    }
+
+    public function getAnnounce()
+    {
+        if(!empty($_GET['req']) && intval($_GET['req'])):
+            $this->announce->hydrate($this->announceModel->getAnnounce($_GET['req']));
+            $view = new \Occazou\Src\View\View('announce');
+            $view->generate(['announce'=>$this->announce]);
+        else:
+            throw new Exception("Oups ! Un erreur s'est produite ...");
         endif;
     }
 

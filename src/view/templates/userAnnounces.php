@@ -24,7 +24,7 @@ $this->scriptPath = '/public/js/formTraitment.js';
             ?>
             <tr>
                 <td><?= $announce->getCreationDate() ?></td>
-                <td><a href=""><?= htmlspecialchars($announce->getTitle()) ?></a></td>
+                <td><a href="/announce/<?= $announce->getId() ?>"><?= htmlspecialchars($announce->getTitle()) ?></a></td>
                 <td><?= htmlspecialchars(substr($announce->getText(),0,60)) ?></td>
                 <td><?= htmlspecialchars($announce->getPrice()) ?></td>
                 <td><button type="button" value="<?= $announce->getId() ?>">Supprimer</button></td>
