@@ -1,6 +1,6 @@
 <?php
 $this->title = 'Mes-Annonces';
-// $this->scriptPath = '/public/js/formTraitment.js';
+$this->scriptPath = '/public/js/formTraitment.js';
 ?>
 <article class="content">
     <h2>Mes annonces</h2>
@@ -27,7 +27,7 @@ $this->title = 'Mes-Annonces';
                 <td><a href=""><?= htmlspecialchars($announce->getTitle()) ?></a></td>
                 <td><?= htmlspecialchars(substr($announce->getText(),0,60)) ?></td>
                 <td><?= htmlspecialchars($announce->getPrice()) ?></td>
-                <td><button>Supprimer</button></td>
+                <td><button type="button" value="<?= $announce->getId() ?>">Supprimer</button></td>
             </tr>
             <?php
             endforeach;
