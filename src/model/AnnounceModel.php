@@ -80,4 +80,10 @@ class AnnounceModel extends Model
             throw new \Exception("Cette annonce n'existe pas");
         endif;
     }
+
+    public function getAnnouncesByRegion($regionName)
+    {
+        $req = $this->db->prepare('SELECT announce_id AS id, author_id, title, text, price, picture_name AS pictureName, DATE_FORMAT(announces.creation_date, "le %d/%m/%Y à %Hh%i") AS creationDate, users.username AS author_username, users.creation_date AS author_creation_date, users.gender AS author_gender, users.firstname AS author_firstname, users.name AS author_name, users.email AS author_email, users.phone AS author_phone, users.address AS author_address, cities.city_id AS author_city_id, cities.name AS author_city_name, cities.zip_code AS author_city_zip_code, regions.region_id AS author_region_region_id, regions.code AS author_region_code, regions.name AS author_region_name FROM announces LEFT JOIN users ON announces.author_id = users.user_id LEFT JOIN cities ON users.city_id = cities.city_id LEFT JOIN regions ON cities.region_code = regions.code WHERE regions.name=?');
+        return ($req->execute([$regionName]))? $req->fetchAll() : null;
+    }
 }
