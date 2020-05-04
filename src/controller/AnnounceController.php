@@ -112,15 +112,45 @@ class AnnounceController
     {
         if(!empty($_GET['req'])):
             $userRequest = $this->formatReq();
-            $announcesData = $this->announceModel->getAnnouncesByRegion($userRequest['location']);
-            $view = new \Occazou\Src\View\View('search');
-            $view->generate(['announcesData'=>$announcesData, 'location'=>$userRequest['location'], 'subject'=>$userRequest['subject']]);
+            if(!empty($userRequest['location']) && !empty($userRequest['subject'])):
+                $announcesData = $this->announceModel->getAnnouncesByCity($userRequest['location'], $userRequest['subject']);
+                echo $this->json_encode($announcesData);
+            else:
+                $announcesData = $this->announceModel->getAnnouncesByRegion($userRequest['location']);
+                $view = new \Occazou\Src\View\View('search');
+                $view->generate(['announcesData'=>$announcesData, 'location'=>$userRequest['location']]);
+            endif;
+        else:
+            header('Location:/');
         endif;
+    }
+
+    private function json_encode($data)
+    {
+        $announcesJSON = [];
+        foreach ($data as $key => $value):
+            $this->announce->hydrate($value);
+            if($img = $this->announce->getPictureName()):
+                $this->announce->setPictureName(UPLOADS_DIR.$img);
+            else:
+                $this->announce->setPictureName(UPLOADS_DIR.IMG_DEFAULT);
+            endif;
+            array_push($announcesJSON,[
+                'id'=>$this->announce->getId(),
+                'title'=>$this->announce->getTitle(),
+                'city'=>$this->announce->getAuthor()->getCity()->getName(),
+                'price'=>(string) $this->announce->getPrice(),
+                'text'=>$this->announce->getText(),
+                'date'=>$this->announce->getCreationDate(),
+                'picture'=>$this->announce->getPictureName()
+            ]);
+        endforeach;
+        return json_encode($announcesJSON);
     }
 
     private function formatReq()
     {
-        $userRequest = explode('&', $_GET['req']);
+        $userRequest = explode('--', $_GET['req']);
         $request['location'] = $userRequest[0];
         $request['subject'] = (!empty($userRequest[1]))? $userRequest[1] : null;
         return $request;
