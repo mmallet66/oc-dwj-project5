@@ -21,17 +21,34 @@ function getDataEntered() {
   return dataEntered;
 }
 
-function showResult(container, data) {
+function showResult(data) {
+  listElt.innerHTML = '';
   data.forEach(announce => {
-    container.appendChild(createAnnounceElement(announce));
+    listElt.appendChild(createAnnounceElement(announce));
   })
 }
 
-function createAnnounceElement(data) {
+function createAnnounceElement(announce) {
   const liElt = document.createElement("li");
   liElt.className = "search-result-list-item-container";
-  liElt.innerHTML = "<a href='#' class='search-result-list-item'><div class='item-picture-container'>  <img src='"+data.picPath+"' alt='announce-picture' class='item-picture'></div><div class='item-description-container'><aside class='item-description-title'>  <h3>"+data.title+"</h3>  <span><i class='fas fa-map-marker-alt'></i> "+data.city.toUpperCase()+"</span></aside><p class='item-description-price'>"+data.price+"</p><p class='item-description-text'>"+data.text+"</p></div></a>";
+  liElt.innerHTML = "<a href='/announce/"+announce.id+"' class='search-result-list-item'><div class='item-picture-container'><img src='/"+announce.picture+"' alt='announce-picture' class='item-picture'></div><div class='item-description-container'><aside class='item-description-title'><h3>"+escapeHtml(announce.title)+"</h3><span><i class='fas fa-map-marker-alt'></i> "+announce.city.toUpperCase()+"</span></aside><p class='item-description-price'>"+escapeHtml(announce.price)+"€</p><p class='item-description-text'>"+escapeHtml(announce.text)+"</p></div></a>";
   return liElt;
+}
+
+function escapeHtml(text) {
+  const charList = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+ 
+  return text.replace(/[&<>"']/g, function(char) { return charList[char]; });
+}
+
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 /* 
@@ -40,29 +57,20 @@ function createAnnounceElement(data) {
 ##############################
 */
 
-const inputElts = document.querySelectorAll("input");
 const submitElt = document.querySelector(".submit");
-
 const listElt = document.getElementById("search-result-list");
+const whatSearchElt = document.getElementById("what-search");
+const url = 'http://occazou/search/';
 
+console.log(whatSearchElt.textContent);
 submitElt.addEventListener("click", (e) => {
   e.preventDefault();
-  const monObjet = [
-    {
-      title: "titre de l'annonce",
-      price: "14,00",
-      city: "perpignan",
-      text: "Je vends cet aspirateur dyson parce que je ne l'utilise pas, on m'en a offert un autre en remplacement, Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, sequi voluptates dignissimos tempora earum adipisci labore ratione unde saepe sed beatae natus libero repellat ipsa totam facilis quaerat cumque optio!",
-      picPath: "https://shop.dyson.fr/media/catalog/product/cache/19/image/480x/9df78eab33525d08d6e5fb8d27136e95/n/2/n248f_absolute_hero_378x4202.jpg"
-    },
-    {
-      title: "Montre Super !",
-      price: "25",
-      city: "canet-en-roussillon",
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, fuga maxime temporibus adipisci nobis, aut ullam officia libero asperiores reiciendis commodi culpa, quam est necessitatibus. Odio eos quaerat neque dicta.",
-      picPath: "https://www.luzaka.com/media/catalog/product/cache/1/image/1000x1500/9df78eab33525d08d6e5fb8d27136e95/4/0/40550_3.jpg"
-    }
-  ];
 
-  showResult(listElt, monObjet);
+  const subject = document.getElementById("research-subject").value;
+  const location = document.getElementById("research-location").value;
+  const request = location+'--'+subject;
+  ajaxGet(url+request, (response) => {
+    whatSearchElt.textContent = capitalize(subject)+' à '+capitalize(location);
+    showResult(response)
+  });
 })
