@@ -9,7 +9,7 @@ $this->scriptPath = '/public/js/research.js';
         <form id='search-form'>
             <div class='search-form-item'>
                 <label for='subject' class='fas fa-search'></label>
-                <input type='search' name='subject' placeholder='Que recherchez-vous ?'>
+                <input type='search' name='subject' id="research-subject" placeholder='Que recherchez-vous ?'>
             </div>
             <div class='search-form-item'>
                 <label for='location' class='fas fa-map-marker-alt'></label>
@@ -22,7 +22,7 @@ $this->scriptPath = '/public/js/research.js';
     </div>
 
     <div id='search-result-container'>
-        <p>Résultats pour : <span><?= $location ?></span></p>
+        <p>Résultats pour : <span id="what-search"><?= $location ?></span></p>
         <ul id='search-result-list'>
         <?php
         foreach ($announcesData as $value):
