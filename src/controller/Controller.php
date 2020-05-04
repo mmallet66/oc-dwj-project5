@@ -84,6 +84,12 @@ class Controller
         $announceController->deleteAnnounce();
     }
 
+    public function search()
+    {
+        $announceController = new AnnounceController();
+        $announceController->getAnnounces();
+    }
+
     public function getSession()
     {
         if (session_status() == PHP_SESSION_NONE) {

@@ -110,4 +110,22 @@ class AnnounceController
             throw new Exception("Il manque une donnée");
         endif;
     }
+
+    public function getAnnounces()
+    {
+        if(!empty($_GET['req'])):
+            $userRequest = $this->formatReq();
+            $announcesData = $this->announceModel->getAnnouncesByRegion($userRequest['location']);
+            $view = new \Occazou\Src\View\View('search');
+            $view->generate(['announcesData'=>$announcesData, 'location'=>$userRequest['location'], 'subject'=>$userRequest['subject']]);
+        endif;
+    }
+
+    private function formatReq()
+    {
+        $userRequest = explode('&', $_GET['req']);
+        $request['location'] = $userRequest[0];
+        $request['subject'] = (!empty($userRequest[1]))? $userRequest[1] : null;
+        return $request;
+    }
 }
