@@ -547,16 +547,17 @@ header {
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
-  max-width: 79%;
+  width: 79%;
   padding: 0 0.5%;
 }
 
-.item-description-title>h3, .item-description-price, .item-description-text {
+.item-description-title>h3, .item-description-text, .item-description-date {
   margin: 0;
 }
 
 .item-description-title, .item-description-price {
   height: 10%;
+  margin: 0 0 10px 0;
 }
 
 .item-description-title {
@@ -582,7 +583,6 @@ header {
 .item-description-price {
   font-weight: bold;
   font-size: 1.17em;
-  margin: 0;
 }
 
 /* ---- Error ---- */

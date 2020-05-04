@@ -2,9 +2,6 @@
 
 namespace Occazou\Src\Controller;
 
-use Exception;
-use Occazou\Src\Model\Announce;
-
 /**
  * Class Controller
  */
@@ -30,7 +27,7 @@ class AnnounceController
             if(!empty($_POST['title']) && !empty($_POST['text']) && !empty($_POST['price'])):
                 if(isset($_FILES['picture']) && $_FILES['picture']['error'] == 0):
                     if(!$this->savePicture($_FILES['picture'])):
-                        throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
+                        throw new \Exception('Une erreur s\'est produite, veuillez réessayer.');
                     endif;
                 endif;
                 $this->announce->hydrate($_POST);
@@ -38,14 +35,14 @@ class AnnounceController
 
                 if(!$this->announceModel->addAnnounce($this->announce)):
                     unlink(UPLOADS_DIR.$this->announce->getPictureName());
-                    throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
+                    throw new \Exception('Une erreur s\'est produite, veuillez réessayer.');
                 endif;
                 header('Location:/user-announces');
             else:
-                throw new Exception('Veuillez remplir tous les champs nécessaires.');
+                throw new \Exception('Veuillez remplir tous les champs nécessaires.');
             endif;
         else:
-            throw new Exception('Veuillez vous connecter.');
+            throw new \Exception('Veuillez vous connecter.');
         endif;
     }
 
@@ -80,7 +77,7 @@ class AnnounceController
             $view = new \Occazou\Src\View\View('userAnnounces');
             $view->generate($announcesData);
         else:
-            throw new Exception("Veuillez vous connecter.");
+            throw new \Exception("Veuillez vous connecter.");
             
         endif;
     }
@@ -92,7 +89,7 @@ class AnnounceController
             $view = new \Occazou\Src\View\View('announce');
             $view->generate(['announce'=>$this->announce]);
         else:
-            throw new Exception("Oups ! Un erreur s'est produite ...");
+            throw new \Exception("Oups ! Un erreur s'est produite ...");
         endif;
     }
 
@@ -104,10 +101,58 @@ class AnnounceController
                 $this->announceModel->deleteAnnounce($_GET['req']);
                 header('Location:/user-announces');
             else:
-                throw new Exception("Vous n'êtes pas autorisé à effectuer cette requête.");
+                throw new \Exception("Vous n'êtes pas autorisé à effectuer cette requête.");
             endif;
         else:
-            throw new Exception("Il manque une donnée");
+            throw new \Exception("Il manque une donnée");
         endif;
+    }
+
+    public function getAnnounces()
+    {
+        if(!empty($_GET['req'])):
+            $userRequest = $this->formatReq();
+            if(!empty($userRequest['location']) && !empty($userRequest['subject'])):
+                $announcesData = $this->announceModel->getAnnouncesByCity($userRequest['location'], $userRequest['subject']);
+                echo $this->json_encode($announcesData);
+            else:
+                $announcesData = $this->announceModel->getAnnouncesByRegion($userRequest['location']);
+                $view = new \Occazou\Src\View\View('search');
+                $view->generate(['announcesData'=>$announcesData, 'location'=>$userRequest['location']]);
+            endif;
+        else:
+            header('Location:/');
+        endif;
+    }
+
+    private function json_encode($data)
+    {
+        $announcesJSON = [];
+        foreach ($data as $key => $value):
+            $this->announce->hydrate($value);
+            if($img = $this->announce->getPictureName()):
+                $this->announce->setPictureName(UPLOADS_DIR.$img);
+            else:
+                $this->announce->setPictureName(UPLOADS_DIR.IMG_DEFAULT);
+            endif;
+            array_push($announcesJSON,[
+                'id'=>$this->announce->getId(),
+                'title'=>$this->announce->getTitle(),
+                'city'=>$this->announce->getAuthor()->getCity()->getName(),
+                'price'=>(string) $this->announce->getPrice(),
+                'text'=>$this->announce->getText(),
+                'date'=>$this->announce->getCreationDate(),
+                'picture'=>$this->announce->getPictureName()
+            ]);
+        endforeach;
+        return json_encode($announcesJSON);
+    }
+
+    private function formatReq()
+    {
+        $userRequest = explode('--', $_GET['req']);
+        $request['location'] = $userRequest[0];
+        $request['subject'] = (!empty($userRequest[1]))? $userRequest[1] : null;
+        return $request;
     }
 }
