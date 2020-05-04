@@ -55,13 +55,10 @@ class AnnounceModel extends Model
         endif;
     }
 
-    public function getAnnouncesByCity($city)
+    public function getAnnouncesByCity($city, $subject=null)
     {
-        // $req = $this->db->prepare('SELECT announces.announce_id AS id, author_id AS authorId, users.username AS authorUsername, title, text, price, users.city AS city, announces.picture_id AS pictureId, pictures.name AS picturePath, announces.creation_date AS creationDate FROM announces LEFT JOIN users ON announces.author_id = users.user_id LEFT Join pictures ON announces.picture_id = pictures.picture_id WHERE users.city=?');
-
-        // $announceData = ($req->execute([$city]))? $req->fetch() : false;
-
-        // return $announceData;
+        $req = $this->db->prepare("SELECT announce_id AS id, author_id, title, text, price, picture_name AS pictureName, DATE_FORMAT(announces.creation_date, 'le %d/%m/%Y à %Hh%i') AS creationDate, users.username AS author_username, users.creation_date AS author_creation_date, users.gender AS author_gender, users.firstname AS author_firstname, users.name AS author_name, users.email AS author_email, users.phone AS author_phone, users.address AS author_address, cities.city_id AS author_city_id, cities.name AS author_city_name, cities.zip_code AS author_city_zip_code, regions.region_id AS author_region_region_id, regions.code AS author_region_code, regions.name AS author_region_name FROM announces LEFT JOIN users ON announces.author_id = users.user_id LEFT JOIN cities ON users.city_id = cities.city_id LEFT JOIN regions ON cities.region_code = regions.code WHERE cities.name=? and announces.title LIKE ?");
+        return ($req->execute([$city, '%'.$subject.'%']))? $req->fetchAll() : false;
     }
 
     public function getUserAnnounces($userId)
