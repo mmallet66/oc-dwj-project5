@@ -2,9 +2,6 @@
 
 namespace Occazou\Src\Controller;
 
-use Exception;
-use Occazou\Src\Model\Announce;
-
 /**
  * Class Controller
  */
@@ -30,7 +27,7 @@ class AnnounceController
             if(!empty($_POST['title']) && !empty($_POST['text']) && !empty($_POST['price'])):
                 if(isset($_FILES['picture']) && $_FILES['picture']['error'] == 0):
                     if(!$this->savePicture($_FILES['picture'])):
-                        throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
+                        throw new \Exception('Une erreur s\'est produite, veuillez réessayer.');
                     endif;
                 endif;
                 $this->announce->hydrate($_POST);
@@ -38,14 +35,14 @@ class AnnounceController
 
                 if(!$this->announceModel->addAnnounce($this->announce)):
                     unlink(UPLOADS_DIR.$this->announce->getPictureName());
-                    throw new Exception('Une erreur s\'est produite, veuillez réessayer.');
+                    throw new \Exception('Une erreur s\'est produite, veuillez réessayer.');
                 endif;
                 header('Location:/user-announces');
             else:
-                throw new Exception('Veuillez remplir tous les champs nécessaires.');
+                throw new \Exception('Veuillez remplir tous les champs nécessaires.');
             endif;
         else:
-            throw new Exception('Veuillez vous connecter.');
+            throw new \Exception('Veuillez vous connecter.');
         endif;
     }
 
@@ -80,7 +77,7 @@ class AnnounceController
             $view = new \Occazou\Src\View\View('userAnnounces');
             $view->generate($announcesData);
         else:
-            throw new Exception("Veuillez vous connecter.");
+            throw new \Exception("Veuillez vous connecter.");
             
         endif;
     }
@@ -92,7 +89,7 @@ class AnnounceController
             $view = new \Occazou\Src\View\View('announce');
             $view->generate(['announce'=>$this->announce]);
         else:
-            throw new Exception("Oups ! Un erreur s'est produite ...");
+            throw new \Exception("Oups ! Un erreur s'est produite ...");
         endif;
     }
 
@@ -104,10 +101,10 @@ class AnnounceController
                 $this->announceModel->deleteAnnounce($_GET['req']);
                 header('Location:/user-announces');
             else:
-                throw new Exception("Vous n'êtes pas autorisé à effectuer cette requête.");
+                throw new \Exception("Vous n'êtes pas autorisé à effectuer cette requête.");
             endif;
         else:
-            throw new Exception("Il manque une donnée");
+            throw new \Exception("Il manque une donnée");
         endif;
     }
 
