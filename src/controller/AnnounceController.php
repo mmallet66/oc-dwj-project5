@@ -98,7 +98,9 @@ class AnnounceController
         if(!empty($_GET['req']) && intval($_GET['req'])):
             $this->announce->hydrate($this->announceModel->getAnnounce($_GET['req']));
             if(!empty($_SESSION['id']) && $_SESSION['id']==$this->announce->getAuthor()->getId()):
-                $this->announceModel->deleteAnnounce($_GET['req']);
+                if($this->announceModel->deleteAnnounce($_GET['req'])):
+                    unlink(UPLOADS_DIR.$this->announce->getPictureName());
+                endif;
                 header('Location:/user-announces');
             else:
                 throw new \Exception("Vous n'êtes pas autorisé à effectuer cette requête.");
@@ -112,13 +114,21 @@ class AnnounceController
     {
         if(!empty($_GET['req'])):
             $userRequest = $this->formatReq();
+            $countOfAnnounces = 5;
+            $start = 0;
+            $subject = null;
             if(!empty($userRequest['location']) && !empty($userRequest['subject'])):
-                $announcesData = $this->announceModel->getAnnouncesByCity($userRequest['location'], $userRequest['subject']);
+                $subject = $userRequest['subject'];
+                $page = (!empty($_GET['page']))? intval($_GET['page']) : 1;
+                $start = ($page-1)*$countOfAnnounces;
+                $announcesData = $this->announceModel->getAnnouncesByCity($userRequest['location'], $userRequest['subject'], $start, $countOfAnnounces);
                 echo $this->json_encode($announcesData);
             else:
-                $announcesData = $this->announceModel->getAnnouncesByRegion($userRequest['location']);
+                $page = (!empty($_GET['page']))? intval($_GET['page']) : 1;
+                $start = ($page-1)*$countOfAnnounces;
+                $announcesData = $this->announceModel->getAnnouncesByRegion($userRequest['location'], $start, $countOfAnnounces);
                 $view = new \Occazou\Src\View\View('search');
-                $view->generate(['announcesData'=>$announcesData, 'location'=>$userRequest['location']]);
+                $view->generate(['announcesData'=>$announcesData, 'subject'=>$subject, 'location'=>$userRequest['location'], 'page'=>$page]);
             endif;
         else:
             header('Location:/');
@@ -152,7 +162,7 @@ class AnnounceController
     {
         $userRequest = explode('--', $_GET['req']);
         $request['location'] = $userRequest[0];
-        $request['subject'] = (!empty($userRequest[1]))? $userRequest[1] : null;
+        $request['subject'] = (!empty($userRequest[1]))? $userRequest[1] : 0;
         return $request;
     }
 }

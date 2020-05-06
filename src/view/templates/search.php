@@ -6,7 +6,7 @@ $this->scriptPath = '/public/js/research.js';
     <h2>Annonces</h2>
 
     <div id='search-form-container'>
-        <form id='search-form'>
+        <form action="/search/" method="post" id='search-form'>
             <div class='search-form-item'>
                 <label for='subject' class='fas fa-search'></label>
                 <input type='search' name='subject' id="research-subject" placeholder='Que recherchez-vous ?'>
@@ -22,7 +22,7 @@ $this->scriptPath = '/public/js/research.js';
     </div>
 
     <div id='search-result-container'>
-        <p>Résultats pour : <span id="what-search"><?= $location ?></span></p>
+        <p>Résultats pour : <span id="what-search"><?= ($subject!=null)? $subject.' à '.$location : $location ?></span></p>
         <ul id='search-result-list'>
         <?php
         foreach ($announcesData as $value):
@@ -64,5 +64,24 @@ $this->scriptPath = '/public/js/research.js';
         endforeach;
         ?>
         </ul>
+    </div>
+    <div id="pagination-container">
+        <?php
+        $previousLink = "<a href='/search/".$_GET['req']."/".intval($page-1)."'>Précédent</a>";
+        $nextLink = "<a href='/search/".$_GET['req']."/".intval($page+1)."'>Suivant</a>";
+        if($page == 1):
+            if(count($announcesData)==5):
+                echo $nextLink;
+            endif;
+        elseif($page > 1):
+            if(count($announcesData)<5):
+                echo $previousLink;
+            else:
+                echo $previousLink;
+                echo "<p style='margin: 0;'> - </p>";
+                echo $nextLink;
+            endif;
+        endif;
+        ?>
     </div>
 </article>

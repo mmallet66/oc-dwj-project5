@@ -302,6 +302,24 @@ header {
   display: none;
 }
 
+/* ---- Pagination ---- */
+
+#pagination-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin: 1em auto;
+  width: 20%;
+}
+
+#pagination-container a {
+  color: #4fb6bb;
+}
+
+#pagination-container p {
+  margin: 0;
+}
+
 /* 
 ##############################
 ###       PAGE STYLE       ###
