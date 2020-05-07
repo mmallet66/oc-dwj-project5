@@ -107,7 +107,7 @@ header {
   font-size: 1.5em;
 }
 
-#connection #username {
+#connection #header-username {
   margin: 0;
 }
 
@@ -251,7 +251,7 @@ header {
   transition: 0.3s;
 }
 
-#content-container i#show-password {
+#content-container i.icon-password {
   color: #cad1d9;
   cursor: pointer;
   display: block;
@@ -261,7 +261,7 @@ header {
   width: 1rem;
 }
 
-#content-container i#show-password:hover {
+#content-container i.icon-password:hover {
   color: #000000;
 }
 
@@ -292,6 +292,32 @@ header {
   display: inline-block;
   border: 8px solid transparent;	
   border-bottom: 8px solid #ffce6b;
+}
+
+#content-container input:disabled {
+  cursor: not-allowed;
+}
+
+#content-container input.hidden {
+  display: none;
+}
+
+/* ---- Pagination ---- */
+
+#pagination-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin: 1em auto;
+  width: 20%;
+}
+
+#pagination-container a {
+  color: #4fb6bb;
+}
+
+#pagination-container p {
+  margin: 0;
 }
 
 /* 
@@ -407,24 +433,38 @@ header {
 
 /* ---- User Announces ---- */
 
-#content-container.my-announces table {
+#content-container.userAnnounces p {
+  text-align: center;
+}
+
+#content-container.userAnnounces a {
+  color: #ff6e6b;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#content-container.userAnnounces table {
   border-collapse: collapse;
   margin: 0 auto;
   width: 90%;
 }
 
-#content-container.my-announces table th {
+#content-container.userAnnounces table th {
   color: #ffce6b;
   text-align: left;
 }
 
-#content-container.my-announces table tr {
+#content-container.userAnnounces table tr {
   background-color: #4fb6bb60;
   border-bottom: 1px solid #fff;
   height: 35px;
 }
 
-#content-container.my-announces table thead, #content-container.my-announces table tr:hover {
+#content-container.userAnnounces table td:last-child {
+  text-align: center;
+}
+
+#content-container.userAnnounces table thead, #content-container.userAnnounces table tr:hover {
   background-color: #4fb6bb;
 }
 
@@ -525,16 +565,17 @@ header {
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
-  max-width: 79%;
+  width: 79%;
   padding: 0 0.5%;
 }
 
-.item-description-title>h3, .item-description-price, .item-description-text {
+.item-description-title>h3, .item-description-text, .item-description-date {
   margin: 0;
 }
 
 .item-description-title, .item-description-price {
   height: 10%;
+  margin: 0 0 10px 0;
 }
 
 .item-description-title {
@@ -560,5 +601,53 @@ header {
 .item-description-price {
   font-weight: bold;
   font-size: 1.17em;
-  margin: 0;
+}
+
+/* ---- Error ---- */
+
+#content-container.error > h2 {
+  color: #4fb6bb;
+  font-size: 4em;
+  grid-column: 1/13;
+  text-align: center;
+}
+
+/* ---- Announce ---- */
+
+#content-container.announce #img-container {
+  text-align: center;
+}
+
+#content-container.announce div, #content-container.announce hr {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+
+#content-container.announce div {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+#content-container.announce i.gender {
+  color: #ffce6b;
+  font-size: 3rem;
+}
+
+#content-container.announce #img-container img {
+  max-width: 100%;
+}
+
+#content-container.announce h4{
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+#content-container.announce #price {
+  color: #ff6e6b;
+  font-size: 1.5rem;
+}
+
+#content-container.announce #description {
+  text-align: justify;
 }
