@@ -1,3 +1,6 @@
+
+/* RESPONSIVE line 658 */
+
 /* 
 ##############################
 ###       PARAMETERS       ###
@@ -650,4 +653,92 @@ header {
 
 #content-container.announce #description {
   text-align: justify;
+}
+
+/* 
+##############################
+###     MEDIA QUERIES      ###
+##############################
+*/
+
+@media screen and (max-width: 1023px) {
+
+  div#page {
+    min-width: unset;
+    width: 100%;
+  }
+
+  #site-title {
+    text-align: left;
+    width: 100%;
+  }
+
+  #connection-area {
+    width: 20%;
+  }
+
+  #content-container article.content {
+    grid-column: 1/13;
+  }
+
+  #content-container.home #message-container {
+    height: 60px;
+  }
+
+  #content-container.home #message-container #message {
+    animation: unset;
+    line-height: 30px;
+  }
+
+  .map-list-container {
+    display: none;
+  }
+
+  #content-container form div {
+    display: block;
+  }
+
+  #content-container form p {
+    width: 100%;
+  }
+
+  #content-container form fieldset, #content-container form input.submit {
+    width: unset;
+  }
+
+  #content-container.userAnnounces table th:nth-child(3), #content-container.userAnnounces table td:nth-child(3) {
+    display: none;
+  }
+
+  #content-container.userAnnounces table th:nth-child(4), #content-container.userAnnounces table td:nth-child(4) {
+    display: none;
+  }
+
+}
+
+
+@media screen and (max-width: 590px) {
+
+  #page #content-container {
+    display: block;
+  }
+
+  .map-image {
+    display: none;
+  }
+
+  .map-list-container {
+    display: block;
+    width: 100%;
+  }
+
+  .map-list-container .map-list {
+    margin: 20vw auto 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .map-list-container .map-list .map-list-item {
+    margin-bottom: 1%;
+  }
 }

@@ -276,10 +276,14 @@ function listenSubmitEvent(formElt) {
       }
       else {
         alert('Au moins un champs est mal rempli');
+        e.preventDefault();
+        e.stopPropagation();
       }
     }
     else {
       alert('Veuillez remplir tous les champs nécessaires correctement !');
+      e.preventDefault();
+      e.stopPropagation();
     }
   })
 }
