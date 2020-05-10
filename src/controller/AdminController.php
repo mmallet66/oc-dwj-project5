@@ -33,4 +33,21 @@ class AdminController extends Controller
             throw new \Exception('Vous n\'êtes pas autorisé à voir cette page !');
         endif;
     }
+
+    public function deleteUser($username)
+    {
+        if(!empty($username)):
+            if($this->userModel->isNotFree($username)):
+                if($this->userModel->deleteUser($username)):
+                    header('Location:/admin');
+                else:
+                    throw new \Exception("Une erreur s'est produite, l'utilisateur n'a pas été supprimé");
+                endif;
+            else:
+                throw new \Exception("Le nom d'utilisateur ".$username." n'existe pas.");
+            endif;
+        else:
+            throw new \Exception("Il manque une donnée");
+        endif;
+    }
 }

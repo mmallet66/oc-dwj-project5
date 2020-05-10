@@ -108,4 +108,10 @@ class UserModel extends Model
 
         return $req->execute(array('password'=>password_hash($user->getPassword(), PASSWORD_DEFAULT),':id'=>$user->getId()));
     }
+
+    public function deleteUser($username)
+    {
+        $req = $this->db->prepare('DELETE FROM users WHERE username=?');
+        return $req->execute([$username]);
+    }
 }
