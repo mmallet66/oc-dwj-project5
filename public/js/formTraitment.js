@@ -304,6 +304,9 @@ function make(formElt, data) {
       case "update-user": 
         alert('Compte utilisateur mis à jour');
         break;
+      case "modify-user": 
+        alert('Compte utilisateur mis à jour');
+        break;
     }
   } else {
     alert(data);

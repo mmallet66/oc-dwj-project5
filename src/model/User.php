@@ -91,6 +91,7 @@ class User
 
         endforeach;
         (!empty($cityData))&& $this->setCity($cityData);
+        return $this;
     }
 
 // SETTERS

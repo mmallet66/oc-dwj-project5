@@ -1,5 +1,6 @@
 Options +FollowSymlinks
 RewriteEngine on
 
+RewriteRule ^(admin)\/?([a-zA-Z-]*)\/?([a-zA-Z0-9\.]*)$ index.php?role=$1&action=$2&req=$3
 RewriteRule ^search\/?([a-zA-Z0-9-]*)\/([0-9]*)$ index.php?action=search&req=$1&page=$2
 RewriteRule ^([a-zA-Z-]+)\/?([a-zA-Z0-9-]*)$ index.php?action=$1&req=$2

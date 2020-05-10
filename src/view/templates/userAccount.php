@@ -1,13 +1,21 @@
 <?php
 $this->title = 'Mon Compte';
 $this->scriptPath = '/public/js/formTraitment.js';
+$roleAdmin = (isset($_GET['role']) && $_GET['role'] == 'admin');
 
 if(!empty($_SESSION['username'])): ?>
 <article class="content">
 
-    <h2>Mon compte</h2>
+    <?php
+    if($roleAdmin):
+        echo '<h2>Compte utilisateur de : '.$user->getUsername().'</h2>';
+        echo '<form action="/admin/modify-user" method="post">';
+    else:
+        echo '<h2>Mon compte</h2>';
+        echo '<form action="/update-user" method="post">';
+    endif;
+    ?>
 
-    <form action="/update-user" method="post">
         <fieldset>
             <legend>Données personnelles</legend>
             <input type="text" name="username" id="username" class="hidden" value="<?= $user->getUsername() ?>" disabled required>
@@ -74,13 +82,19 @@ if(!empty($_SESSION['username'])): ?>
         <input class="submit" type="submit" value="Mettre à jour mes données personnelle">
     </form>
 
-    <form method="post" id="update-password">
+    <?php
+    if(!$roleAdmin):
+    ?>
+    <form method="post" id="<?= ($roleAdmin)? 'admin-' : '' ?>update-password">
         <fieldset>
             <legend>Mot de passe</legend>
             <div id="password-container"></div>
         </fieldset>
         <input class="submit" type="submit" value="Remplacer mon mot de passe">
     </form>
+    <?php
+    endif;
+    ?>
 
 </article>
 <?php
