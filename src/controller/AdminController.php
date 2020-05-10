@@ -50,4 +50,18 @@ class AdminController extends Controller
             throw new \Exception("Il manque une donnée");
         endif;
     }
+
+    public function manageUser($username)
+    {
+        if(!empty($username)):
+            if($this->user->hydrate($this->userModel->getUser($username))):
+                $view = new \Occazou\Src\View\View('userAccount');
+                $view->generate(['user'=>$this->user]);
+            else:
+                throw new \Exception("Le nom d'utilisateur ".$username." n'existe pas.");
+            endif;
+        else:
+            throw new \Exception("Il manque une donnée");
+        endif;
+    }
 }
