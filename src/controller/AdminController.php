@@ -35,6 +35,26 @@ class AdminController extends Controller
         endif;
     }
 
+    public function removeAnnounce($announceId)
+    {
+        if(!empty($announceId)):
+            $this->announce->hydrate($this->announceModel->getAnnounce($announceId));
+            if($this->announce->getId()):
+                if($this->announceModel->deleteAnnounce($announceId)):
+                    unlink(UPLOADS_DIR.$this->announce->getPictureName());
+                    header('Location:/admin');
+                else:
+                    throw new \Exception("Une erreur s'est produite, l'annonce n'a pas été supprimée");
+                endif;
+            else:
+                throw new \Exception("L'annonce n'existe pas !");
+                
+            endif;
+        else:
+            throw new \Exception("Il manque une donnée");
+        endif;
+    }
+
     public function deleteUser($username)
     {
         if(!empty($username)):
