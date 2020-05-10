@@ -27,10 +27,31 @@ class AdminController extends Controller
     {
         if(isset($_SESSION['username']) && $_SESSION['username'] == 'admin'):
             $usersData = $this->userModel->getUsers();
+            $announcesData = $this->announceModel->getAnnounces();
             $view = new \Occazou\Src\View\View('admin');
-            $view->generate(['usersData'=>$usersData]);
+            $view->generate(['usersData'=>$usersData, 'announcesData'=>$announcesData]);
         else:
             throw new \Exception('Vous n\'êtes pas autorisé à voir cette page !');
+        endif;
+    }
+
+    public function removeAnnounce($announceId)
+    {
+        if(!empty($announceId)):
+            $this->announce->hydrate($this->announceModel->getAnnounce($announceId));
+            if($this->announce->getId()):
+                if($this->announceModel->deleteAnnounce($announceId)):
+                    unlink(UPLOADS_DIR.$this->announce->getPictureName());
+                    header('Location:/admin');
+                else:
+                    throw new \Exception("Une erreur s'est produite, l'annonce n'a pas été supprimée");
+                endif;
+            else:
+                throw new \Exception("L'annonce n'existe pas !");
+                
+            endif;
+        else:
+            throw new \Exception("Il manque une donnée");
         endif;
     }
 
