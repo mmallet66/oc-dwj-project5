@@ -66,6 +66,12 @@ class UserModel extends Model
         return $userData;
     }
 
+    public function getUsers()
+    {
+        $req = $this->db->query('SELECT users.user_id AS id, users.username, users.password, users.creation_date AS creationDate, users.gender, users.firstname, users.name, users.email, users.phone, users.address, cities.city_id AS city_id, cities.name AS city_name, cities.zip_code AS city_zipCode, regions.region_id AS city_region_id, regions.code AS city_region_code, regions.name AS city_region_name FROM users INNER JOIN cities ON users.city_id = cities.city_id INNER JOIN regions ON cities.region_code = regions.code ORDER BY creation_date ASC');
+        return ($usersData = $req->fetchAll())? $usersData : false;
+    }
+
     /**
      * Update a user's datas in the database
      * 

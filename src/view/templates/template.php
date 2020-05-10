@@ -29,9 +29,17 @@
                     <div id="user-menu">
                         <ul class="user-menu-list">
                             <li class="user-menu-list-item"><a href="/user-account">Mon compte</a></li>
+                        <?php if($_SESSION['username'] === 'admin'):?>
+                            <li class="user-menu-list-item"><a href="/admin">Espace Administrateur</a></li>
+                        <?php
+                        else:
+                        ?>
                             <li class="user-menu-list-item"><a href="/user-announces">Mes annonces</a></li>
                             <li class="user-menu-list-item"><a href="/create-announce">Déposer une annonce</a></li>
-                            <li class="user-menu-list-item"><a href="/disconnect-user">Me déconnecter</a></li>
+                        <?php
+                        endif;
+                        ?>
+                        <li class="user-menu-list-item"><a href="/disconnect-user">Me déconnecter</a></li>
                         </ul>
                     </div>
                 <?php
