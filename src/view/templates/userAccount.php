@@ -5,9 +5,16 @@ $this->scriptPath = '/public/js/formTraitment.js';
 if(!empty($_SESSION['username'])): ?>
 <article class="content">
 
-    <h2>Mon compte</h2>
+    <?php
+    if(isset($_GET['role']) && $_GET['role'] == 'admin'):
+        echo '<h2>Compte utilisateur de : '.$user->getUsername().'</h2>';
+        echo '<form action="/admin/modify-user" method="post">';
+    else:
+        echo '<h2>Mon compte</h2>';
+        echo '<form action="/update-user" method="post">';
+    endif;
+    ?>
 
-    <form action="/update-user" method="post">
         <fieldset>
             <legend>Données personnelles</legend>
             <input type="text" name="username" id="username" class="hidden" value="<?= $user->getUsername() ?>" disabled required>
