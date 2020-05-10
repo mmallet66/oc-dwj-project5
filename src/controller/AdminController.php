@@ -64,4 +64,17 @@ class AdminController extends Controller
             throw new \Exception("Il manque une donnée");
         endif;
     }
+
+    public function modifyUser($username)
+    {
+        if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['city_name'])):
+            $this->user->hydrate($this->userModel->getUser($_POST['username']));
+            $this->user->hydrate($_POST);
+            $cityModel = new \Occazou\Src\Model\CityModel();
+            $this->user->getcity()->setId($cityModel->getCityId($this->user->getcity()));
+            echo ($this->userModel->updateUser($this->user))? true : 'Une erreur s\'est produite, veuillez réessayer';
+        else:
+            echo 'Veuillez remplir tous les champs nécessaires !';
+        endif;
+    }
 }
