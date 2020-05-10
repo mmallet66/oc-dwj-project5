@@ -65,6 +65,12 @@ class AnnounceModel extends Model
         return ($req->execute())? $req->fetchAll() : null;
     }
 
+    public function getAnnounces()
+    {
+        $req = $this->db->query('SELECT announce_id AS id, author_id, title, text, price, picture_name AS pictureName, DATE_FORMAT(creation_date, "%d/%m/%Y") AS creationDate FROM announces ORDER BY creation_date ASC');
+        return ($announcesData = $req->fetchAll())? $announcesData : false;
+    }
+
     public function getUserAnnounces($userId)
     {
         $req = $this->db->prepare('SELECT announce_id AS id, author_id, title, text, price, picture_name AS pictureName, DATE_FORMAT(creation_date, "%d/%m/%Y") AS creationDate FROM announces WHERE author_id=?');
