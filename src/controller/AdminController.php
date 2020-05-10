@@ -27,8 +27,9 @@ class AdminController extends Controller
     {
         if(isset($_SESSION['username']) && $_SESSION['username'] == 'admin'):
             $usersData = $this->userModel->getUsers();
+            $announcesData = $this->announceModel->getAnnounces();
             $view = new \Occazou\Src\View\View('admin');
-            $view->generate(['usersData'=>$usersData]);
+            $view->generate(['usersData'=>$usersData, 'announcesData'=>$announcesData]);
         else:
             throw new \Exception('Vous n\'êtes pas autorisé à voir cette page !');
         endif;
