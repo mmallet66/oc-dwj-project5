@@ -15,6 +15,9 @@ function requestConfirmation(button) {
         case 'delete-user':
             message += 'supprimer l\'utilisateur "'+button.value+'"';
             break;
+        case 'remove-announce':
+            message += 'supprimer cette annonce ?';
+            break;
     }
     return confirm(message);
 }
